@@ -1,10 +1,10 @@
-import javax.swing.JFrame;
-import javax.swing.JPanel;
+import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.Dimension;
-import java.awt.event.MouseListener;
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
 
 public class GraphicalEngine extends JPanel implements Runnable, MouseListener{
 	
@@ -16,17 +16,11 @@ public class GraphicalEngine extends JPanel implements Runnable, MouseListener{
 	private final long targetTime = 1000/fps;
 
 	public InfinityTest game = new InfinityTest();
-
-	/**
-	 * 
-	 */
+	
 	public GraphicalEngine(){
 		initComponents();
 	}
 
-	/**
-	 * 
-	 */
 	public void initComponents(){
 		JFrame window = new JFrame();
 		window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -48,9 +42,6 @@ public class GraphicalEngine extends JPanel implements Runnable, MouseListener{
 		thread.start();
 	}
 
-	/**
-	 * 
-	 */
 	public void run(){
 		while(running){
 			Long start = System.nanoTime();
@@ -64,7 +55,7 @@ public class GraphicalEngine extends JPanel implements Runnable, MouseListener{
 			try{
 				Thread.sleep(wait);
 			}
-			catch(Exception e){
+			catch(InterruptedException e){
 				e.printStackTrace();
 			}
 		}
