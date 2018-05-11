@@ -12,8 +12,10 @@ import javax.swing.JPanel;
  *
  * @author Ivan Mota, Isaias Leos Ayala
  */
-public class Infinity extends JPanel
+public final class Infinity extends JPanel
 {
+
+	private static final long serialVersionUID = 1L;
 
 	public Infinity()
 	{
