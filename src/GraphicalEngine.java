@@ -3,27 +3,30 @@ import javax.swing.JPanel;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Dimension;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseMotionListener;
 
 public class GraphicalEngine extends JPanel implements Runnable, MouseListener{
 	
-	public final int WIDTH = 500;
-	public final int HEIGHT = 500;
+	public final int WIDTH = 1280;
+	public final int HEIGHT = 720;
 	private Thread thread;
 	private boolean running;
-	private int fps = 60;
-	private long targetTime = 1000/fps;
+	private final int fps = 60;
+	private final long targetTime = 1000/fps;
 
 	public InfinityTest game = new InfinityTest();
 
+	/**
+	 * 
+	 */
 	public GraphicalEngine(){
 		initComponents();
 	}
 
+	/**
+	 * 
+	 */
 	public void initComponents(){
 		JFrame window = new JFrame();
 		window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -45,6 +48,9 @@ public class GraphicalEngine extends JPanel implements Runnable, MouseListener{
 		thread.start();
 	}
 
+	/**
+	 * 
+	 */
 	public void run(){
 		while(running){
 			Long start = System.nanoTime();
@@ -64,17 +70,26 @@ public class GraphicalEngine extends JPanel implements Runnable, MouseListener{
 		}
 	}
 
+	/**
+	 * 
+	 */
 	public void tick(){
 		game.update();
 	}
 
+	/**
+	 * 
+	 * @param g 
+	 */
 	public void paintComponent(Graphics g){
 		super.paintComponent(g);
 		Graphics2D g2 = (Graphics2D) g;
 		game.draw(g2);
 	}
 
-	public void mousePressed(MouseEvent event){}
+	public void mousePressed(MouseEvent event){
+		game.mousePressed(event);
+	}
 	public void	mouseClicked(MouseEvent event){}
 	public void mouseEntered(MouseEvent event){}
 	public void mouseExited(MouseEvent event){}

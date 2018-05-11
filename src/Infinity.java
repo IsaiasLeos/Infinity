@@ -53,10 +53,10 @@ public final class Infinity extends JPanel
 		g2.fill(rect);
 	}
 
-	public static void main(String[] args)
-	{
-		Infinity S = new Infinity();
-
-	}
+//	public static void main(String[] args)
+//	{
+//		Infinity S = new Infinity();
+//
+//	}
 
 }
