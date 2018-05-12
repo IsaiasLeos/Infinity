@@ -1,6 +1,7 @@
 
 import java.awt.Graphics2D;
 import java.awt.geom.Rectangle2D;
+import java.awt.Color;
 
 /**
  *
@@ -43,9 +44,8 @@ public class Player
 	 * Draws the player.
 	 * @param g
 	 */
-	public void draw(Graphics2D g)
+	public void draw(Graphics2D g2)
 	{
-		Graphics2D g2 = g;
 		Rectangle2D rect = new Rectangle2D.Double(x, y, jumpSpeed, size);
 		g2.fill(rect);
 	}
@@ -78,5 +78,33 @@ public class Player
 			}
 			y += fallSpd;
 		}
+	}
+
+	/**
+	 * Returns top collition bounds.
+	 */
+	public Rectangle2D getTopBounds(){
+		return new Rectangle2D.Double(x + 2, y - 2, size - size/8, size/2);
+	}
+
+	/**
+	 * Returns bot collition bounds.
+	 */
+	public Rectangle2D getBotBounds(){
+		return new Rectangle2D.Double(x + 2, y + size/2 + 2, size - size/8, size/2);
+	}
+
+	/**
+	 * Returns left collition bounds.
+	 */
+	public Rectangle2D getLeftBounds(){
+		return new Rectangle2D.Double(x - 2, y + 2, size/3, size - 4);
+	}
+
+	/**
+	 * Returns right collition bounds.
+	 */
+	public Rectangle2D getRightBounds(){
+		return new Rectangle2D.Double(x + size - size/3 + 2, y + 2, size/3, size - 4);
 	}
 }
