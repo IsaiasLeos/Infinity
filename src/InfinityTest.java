@@ -8,7 +8,12 @@ public class InfinityTest
 {
 
 	public LinkedList<Platform> platforms = new LinkedList<>();
-	Player player = new Player(50, 50, 50, 50);
+	public Player player = new Player(50, 50, 50, 50);
+
+	public boolean topCollition;
+	public boolean botCollition;
+	public boolean rightCollition;
+	public boolean leftCollition;
 
 	public void onCreate()
 	{
@@ -20,11 +25,10 @@ public class InfinityTest
 
 	public void update()
 	{
-		
+		checkCollitions();
 		player.update();
 		for(int i = 0; i < platforms.size(); i++)
 		{
-			checkCollitions();
 			platforms.get(i).x -= 1;
 		}
 	}
@@ -40,7 +44,7 @@ public class InfinityTest
 
 	public void mousePressed(MouseEvent event)
 	{
-		System.out.println(event);
+		//System.out.println(event);
 		player.jumping = true;
 	}
 
@@ -48,10 +52,22 @@ public class InfinityTest
 	{
 		for(int i = 0; i < platforms.size(); i++)
 		{
-			boolean isFalling = platforms.get(i).getBounds().contains(new Point2D.Double(player.x, player.y + player.size + 1)) || platforms.get(i).getBounds().contains(new Point2D.Double(player.x + player.size, player.y + player.size + 1));
-			if(isFalling)
+			if(platforms.get(i).getBounds().intersects(player.getTopBounds()))
 			{
+				topCollition = true;
+			}
+			if(platforms.get(i).getBounds().intersects(player.getBotBounds()))
+			{
+				botCollition = true;
 				player.falling = false;
+			}
+			if(platforms.get(i).getBounds().intersects(player.getLeftBounds()))
+			{
+				leftCollition = true;
+			}
+			if(platforms.get(i).getBounds().intersects(player.getRightBounds()))
+			{
+				rightCollition = true;
 			}
 		}
 	}
