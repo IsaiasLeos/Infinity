@@ -12,10 +12,10 @@ import javax.imageio.ImageIO;
 public class Player
 {
 
-	public int x;
+	public int x;//coordinates of player
 	public int y;
 	public int jumpSpeed;
-	public final int size = 32;
+	public final int size = 32;//original size
 	public int newSize = size;
 
 	public double maxJumpSpd = 0;
