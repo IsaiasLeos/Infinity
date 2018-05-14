@@ -7,14 +7,14 @@ import java.util.LinkedList;
 public class InfinityTest
 {
 
-	public LinkedList<Platform> platforms = new LinkedList<>();
+	public LinkedList<PlatformGenerator> platforms = new LinkedList<PlatformGenerator>();
 	public Player player = new Player(50, 50, 50, 50);//Spawn Location
 
 	public void onCreate()
 	{
-		for(int i = 0; i < 20; i++)
+		for(int i = 0; i < 50; i++)
 		{
-			platforms.add(new Platform(i * 300, 400, 200, 100));
+			platforms.add(new PlatformGenerator(i * 300, 400));
 		}
 	}
 
@@ -24,9 +24,12 @@ public class InfinityTest
 		player.update();
 		for(int i = 0; i < platforms.size(); i++)
 		{
-			if(!player.collidingRight)
+			for(int j = 0; j < platforms.get(i).plat.size(); j++)
 			{
-				platforms.get(i).x -= 2;
+				if(!player.collidingRight)
+				{
+					platforms.get(i).plat.get(j).x -= 2;
+				}
 			}
 		}
 	}
@@ -36,7 +39,10 @@ public class InfinityTest
 		player.draw(g);
 		for(int i = 0; i < platforms.size(); i++)
 		{
-			platforms.get(i).draw(g);
+			for(int j = 0; j < platforms.get(i).plat.size(); j++)
+			{
+				platforms.get(i).plat.get(j).draw(g);
+			}
 		}
 	}
 
@@ -67,45 +73,48 @@ public class InfinityTest
 		player.collidingLeft = false;
 		for(int i = 0; i < platforms.size(); i++)
 		{
-			int platformX = platforms.get(i).x;
-			int platformY = platforms.get(i).y;
-			int platformW = platforms.get(i).width;
-			int platformH = platforms.get(i).height;
-			if(player.y <= platformY + platformH
-				&& player.y + player.size >= platformY
-				&& player.x <= platformX + platformW
-				&& player.x + player.size >= platformX)
+			for(int j = 0; j < platforms.get(i).plat.size(); j++)
 			{
-				if(player.x <= platformX + platformW - 2
-					&& player.x + player.size - 2 >= platformX
-					&& player.y > platformY)
+				int platformX = platforms.get(i).plat.get(j).x;
+				int platformY = platforms.get(i).plat.get(j).y;
+				int platformW = platforms.get(i).plat.get(j).width;
+				int platformH = platforms.get(i).plat.get(j).height;
+				if(player.y <= platformY + platformH
+					&& player.y + player.size >= platformY
+					&& player.x <= platformX + platformW
+					&& player.x + player.size >= platformX)
 				{
-					player.collidingTop = false;
-					player.jumping = false;
+					if(player.x <= platformX + platformW - 2
+						&& player.x + player.size - 2 >= platformX
+						&& player.y > platformY)
+					{
+						player.collidingTop = false;
+						player.jumping = false;
+						player.falling = true;
+						player.jumpSpd = player.jumpOriginalVal;
+					}
+					if(player.x <= platformX + platformW - 2
+						&& player.x + player.size - 2 >= platformX
+						&& player.y + player.size < platformY + platformH)
+					{
+						player.y = platformY - player.size;
+						player.collidingBot = true;
+						player.falling = false;
+						player.fallSpd = 0;
+					}
+					if(player.x + player.size == platformX + 1)
+					{
+						player.collidingRight = true;
+					}
+					if(player.x == platformX + platformW + 1)
+					{
+						player.collidingLeft = true;
+					}
+				}
+				if(!player.collidingBot)
+				{
 					player.falling = true;
-					player.jumpSpd = player.jumpOriginalVal;
 				}
-				if(player.x <= platformX + platformW - 2
-					&& player.x + player.size - 2 >= platformX
-					&& player.y + player.size < platformY + platformH)
-				{
-					player.y = platformY - player.size;
-					player.collidingBot = true;
-					player.falling = false;
-					player.fallSpd = 0;
-				}
-				if(player.x + player.size == platformX)
-				{
-					player.collidingRight = true;
-				}
-				if(player.x == platformX + platformW)
-				{
-					player.collidingLeft = true;
-				}
-			}
-			if(!player.collidingBot)
-			{
-				player.falling = true;
 			}
 		}
 	}
