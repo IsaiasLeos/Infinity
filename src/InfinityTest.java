@@ -10,6 +10,8 @@ public class InfinityTest
 	public LinkedList<PlatformGenerator> platforms = new LinkedList<PlatformGenerator>();
 	public Player player = new Player(50, 50, 50, 50);//Spawn Location
 
+	public boolean isMoving;
+
 	public void onCreate()
 	{
 		for(int i = 0; i < 50; i++)
@@ -36,6 +38,7 @@ public class InfinityTest
 
 	public void draw(Graphics2D g)
 	{
+
 		player.draw(g);
 		for(int i = 0; i < platforms.size(); i++)
 		{
@@ -44,10 +47,11 @@ public class InfinityTest
 				platforms.get(i).plat.get(j).draw(g);
 			}
 		}
+
 	}
 
 	public void mousePressed(MouseEvent event)
-	{
+	{//Player jumps
 		if(!player.jumping && !player.falling)
 		{
 			player.jumping = true;
