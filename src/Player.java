@@ -1,6 +1,9 @@
 
 import java.awt.Graphics2D;
 import java.awt.geom.Rectangle2D;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+import javax.imageio.ImageIO;
 
 /**
  *
@@ -12,7 +15,8 @@ public class Player
 	public int x;
 	public int y;
 	public int jumpSpeed;
-	public final int size;
+	public final int size = 32;
+	public int newSize = size;
 
 	public double maxJumpSpd = 0;
 	public double jumpOriginalVal = 10;
@@ -28,6 +32,8 @@ public class Player
 	public boolean collidingLeft;
 	public boolean collidingRight;
 
+	public BufferedImage playerImage;
+
 	/**
 	 * Creates the player at the given position.
 	 * @param x
@@ -35,12 +41,12 @@ public class Player
 	 * @param jumpSpeed
 	 * @param size
 	 */
-	public Player(int x, int y, int jumpSpeed, int size)
+	public Player(int x, int y, int jumpSpeed, int newSize)
 	{
 		this.x = x;
 		this.y = y;
 		this.jumpSpeed = jumpSpeed;
-		this.size = size;
+		this.newSize = newSize;
 	}
 
 	/**
@@ -49,10 +55,19 @@ public class Player
 	 */
 	public void draw(Graphics2D g2)
 	{
-		Rectangle2D rect = new Rectangle2D.Double(x, y, jumpSpeed, size);
+		try
+		{
+			playerImage = ImageIO.read(getClass().getResourceAsStream("Assets/green.png"));
+		}
+		catch(IOException e)
+		{
+			e.printStackTrace();
+		}
+		Rectangle2D rect = new Rectangle2D.Double(x, y, size, size);
 		g2.fill(rect);
+		g2.drawImage(playerImage, x, y, size, size, null);
 	}
-	
+
 	public void setDefaultLocation(int x, int y)
 	{
 		this.x = x;

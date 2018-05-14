@@ -1,5 +1,6 @@
 
 import java.awt.Graphics2D;
+import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.util.LinkedList;
 
@@ -47,9 +48,10 @@ public class InfinityTest
 		}
 	}
 
-	public void keyTyped(char event)
+	public void keyTyped(KeyEvent event)
 	{
-		if('r' == event || 'R' == event)
+		char letterPressed = event.getKeyChar();
+		if('r' == letterPressed || 'R' == letterPressed)
 		{
 			//Reset Spawn Location
 			player.fallSpd = 0;
