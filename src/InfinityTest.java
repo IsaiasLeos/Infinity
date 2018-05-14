@@ -12,7 +12,7 @@ public class InfinityTest
 
 	public void onCreate()
 	{
-		for(int i = 0; i < 6; i++)
+		for(int i = 0; i < 20; i++)
 		{
 			platforms.add(new Platform(i * 300, 400, 200, 100));
 		}
