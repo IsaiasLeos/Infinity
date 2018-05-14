@@ -14,7 +14,7 @@ public class InfinityTest
 	{
 		for(int i = 0; i < 6; i++)
 		{
-			platforms.add(new Platform(i * 250, 400, 150, 100));
+			platforms.add(new Platform(i * 300, 400, 200, 100));
 		}
 	}
 
@@ -24,7 +24,10 @@ public class InfinityTest
 		player.update();
 		for(int i = 0; i < platforms.size(); i++)
 		{
+			if(!player.collidingRight)
+			{
 			platforms.get(i).x -= 2;
+			}
 		}
 	}
 
