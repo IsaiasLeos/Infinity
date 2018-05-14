@@ -125,7 +125,7 @@ public class GraphicalEngine extends JPanel implements Runnable, MouseListener, 
 
 	public void keyPressed(KeyEvent e)
 	{
-	}
+	} 
 
 	public static void main(String[] args)
 	{
