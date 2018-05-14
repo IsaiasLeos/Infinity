@@ -10,16 +10,11 @@ public class InfinityTest
 	public LinkedList<Platform> platforms = new LinkedList<>();
 	public Player player = new Player(50, 50, 50, 50);
 
-	public boolean topCollition;
-	public boolean botCollition;
-	public boolean rightCollition;
-	public boolean leftCollition;
-
 	public void onCreate()
 	{
 		for(int i = 0; i < 6; i++)
 		{
-			platforms.add(new Platform(i * 220, 400, 150, 100));
+			platforms.add(new Platform(i * 250, 400, 150, 100));
 		}
 	}
 
@@ -29,7 +24,7 @@ public class InfinityTest
 		player.update();
 		for(int i = 0; i < platforms.size(); i++)
 		{
-			platforms.get(i).x -= 1;
+			platforms.get(i).x -= 2;
 		}
 	}
 
@@ -44,30 +39,59 @@ public class InfinityTest
 
 	public void mousePressed(MouseEvent event)
 	{
-		//System.out.println(event);
+		if(!player.jumping && !player.falling)
+		{
 		player.jumping = true;
+		}
 	}
 
 	public void checkCollitions()
-	{
+	{	
+		player.collidingTop = false;
+		player.collidingBot = false;
+		player.collidingRight = false;
+		player.collidingLeft = false;
 		for(int i = 0; i < platforms.size(); i++)
 		{
-			if(platforms.get(i).getBounds().intersects(player.getTopBounds()))
+			int platformX = platforms.get(i).x;
+			int platformY = platforms.get(i).y;
+			int platformW = platforms.get(i).width;
+			int platformH = platforms.get(i).height;
+			if(player.y <= platformY + platformH && 
+				player.y + player.size >= platformY && 
+				player.x <= platformX + platformW && 
+				player.x + player.size >= platformX)
 			{
-				topCollition = true;
+				if(player.x <= platformX + platformW - 2 &&
+					player.x + player.size - 2 >= platformX &&
+					player.y > platformY)
+				{
+					player.collidingTop = false;
+					player.jumping = false;
+					player.falling = true;
+					player.jumpSpd = player.jumpOriginalVal;
+				}
+				if(player.x <= platformX + platformW - 2 &&
+					player.x + player.size - 2 >= platformX &&
+					player.y + player.size < platformY + platformH)
+				{
+					player.y = platformY - player.size;
+					player.collidingBot = true;
+					player.falling = false;
+					player.fallSpd = 0;
+				}
+				if(player.x + player.size == platformX)
+				{
+					player.collidingRight = true;
+				}
+				if(player.x == platformX + platformW)
+				{
+					player.collidingLeft = true;
+				}
 			}
-			if(platforms.get(i).getBounds().intersects(player.getBotBounds()))
+			if(!player.collidingBot)
 			{
-				botCollition = true;
-				player.falling = false;
-			}
-			if(platforms.get(i).getBounds().intersects(player.getLeftBounds()))
-			{
-				leftCollition = true;
-			}
-			if(platforms.get(i).getBounds().intersects(player.getRightBounds()))
-			{
-				rightCollition = true;
+				player.falling = true;
 			}
 		}
 	}

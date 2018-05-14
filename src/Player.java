@@ -16,14 +16,18 @@ public class Player
 	public int size;
 
 	public double maxJumpSpd = 0;
-	public double jumpOriginalVal = 8;
+	public double jumpOriginalVal = 10;
 	public double jumpSpd = jumpOriginalVal;
 	public double jumpAcceler = 0.2;
 	public double fallSpd = 0;
-	public double maxFallSpd = 5;
 	public double fallAcceler = 0.15;
 	public boolean jumping;
 	public boolean falling;
+
+	public boolean collidingTop;
+	public boolean collidingBot;
+	public boolean collidingLeft;
+	public boolean collidingRight;
 
 	/**
 	 * Creates the player at the given position.
@@ -55,7 +59,7 @@ public class Player
 	 */
 	public void update()
 	{
-		if(jumping)
+		if(jumping && !collidingTop)
 		{
 			if(jumpSpd > maxJumpSpd)
 			{
@@ -71,44 +75,8 @@ public class Player
 		}
 		if(falling)
 		{
-			if(fallSpd < maxFallSpd)
-			{
-				y += fallSpd;
-				fallSpd += fallAcceler;
-			}
 			y += fallSpd;
+			fallSpd += fallAcceler;
 		}
-	}
-
-	/**
-	 * Returns top collition bounds.
-	 */
-	public Rectangle2D getTopBounds()
-	{
-		return new Rectangle2D.Double(x + 2, y - 2, size - size/8, size/2);
-	}
-
-	/**
-	 * Returns bot collition bounds.
-	 */
-	public Rectangle2D getBotBounds()
-	{
-		return new Rectangle2D.Double(x + 2, y + size/2 + 2, size - size/8, size/2);
-	}
-
-	/**
-	 * Returns left collition bounds.
-	 */
-	public Rectangle2D getLeftBounds()
-	{
-		return new Rectangle2D.Double(x - 2, y + 2, size/3, size - 4);
-	}
-
-	/**
-	 * Returns right collition bounds.
-	 */
-	public Rectangle2D getRightBounds()
-	{
-		return new Rectangle2D.Double(x + size - size/3 + 2, y + 2, size/3, size - 4);
 	}
 }
