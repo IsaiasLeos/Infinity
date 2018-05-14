@@ -1,5 +1,9 @@
 
-import java.io.IOException;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.FileWriter;
+import java.util.Scanner;
 
 /**
  *
@@ -12,21 +16,43 @@ public class ScoreSystem
 	public int highScore;
 	public int[] scoreboard = new int[3];
 
-	public static boolean doesExist()
+	public ScoreSystem()
 	{
-		return false;
+		readScoreFile();
+		writeHighScore();
 	}
 
-	/**
-	 * Creates a hash table given the text file.
-	 */
-	public static void displayScoreSystem()
+	public void readScoreFile()
 	{
-
+		try
+		{
+			FileOutputStream newFile = new FileOutputStream(getClass().getResource("scoreboard.txt"), true);
+			Scanner scnr = new Scanner(new File(ScoreSystem.class.getResource("scoreboard.txt")));
+			if(scnr.hasNextLine())
+			{
+				Scanner lineScnr = new Scanner(scnr.nextLine());
+				highScore = lineScnr.nextInt();
+			}
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+		}
 	}
 
-	public static void main(String[] args) throws IOException
+	public void writeHighScore()
 	{
-		doesExist();
+		try
+		{
+			BufferedWriter writer = new BufferedWriter(new FileWriter(ScoreSystem.class.getResource("scoreboard.txt")));
+			String scr = Integer.toString(highScore);
+			writer.write(scr);
+			writer.close();
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+		}
 	}
+
 }
