@@ -1,6 +1,5 @@
 
 import java.awt.Graphics2D;
-import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.util.LinkedList;
 
@@ -48,13 +47,13 @@ public class InfinityTest
 		}
 	}
 
-	public void keyTyped(int event)
+	public void keyTyped(char event)
 	{
-		if(KeyEvent.VK_R == event)
+		if('r' == event || 'R' == event)
 		{
 			//Reset Spawn Location
 			player.fallSpd = 0;
-			player.setDefaultLocation(640, 180, 50, 50);
+			player.setDefaultLocation(640, 180);
 		}
 	}
 

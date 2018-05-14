@@ -12,7 +12,7 @@ public class Player
 	public int x;
 	public int y;
 	public int jumpSpeed;
-	public int size;
+	public final int size;
 
 	public double maxJumpSpd = 0;
 	public double jumpOriginalVal = 10;
@@ -53,12 +53,10 @@ public class Player
 		g2.fill(rect);
 	}
 	
-	public void setDefaultLocation(int x, int y, int jumpSpeed, int size)
+	public void setDefaultLocation(int x, int y)
 	{
 		this.x = x;
 		this.y = y;
-		this.jumpSpeed = jumpSpeed;
-		this.size = size;
 	}
 
 	/**
