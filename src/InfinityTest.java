@@ -1,14 +1,14 @@
 
-import java.util.LinkedList;
 import java.awt.Graphics2D;
+import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
-import java.awt.geom.Point2D;
+import java.util.LinkedList;
 
 public class InfinityTest
 {
 
 	public LinkedList<Platform> platforms = new LinkedList<>();
-	public Player player = new Player(50, 50, 50, 50);
+	public Player player = new Player(50, 50, 50, 50);//Spawn Location
 
 	public void onCreate()
 	{
@@ -26,7 +26,7 @@ public class InfinityTest
 		{
 			if(!player.collidingRight)
 			{
-			platforms.get(i).x -= 2;
+				platforms.get(i).x -= 2;
 			}
 		}
 	}
@@ -44,12 +44,22 @@ public class InfinityTest
 	{
 		if(!player.jumping && !player.falling)
 		{
-		player.jumping = true;
+			player.jumping = true;
+		}
+	}
+
+	public void keyTyped(int event)
+	{
+		if(KeyEvent.VK_R == event)
+		{
+			//Reset Spawn Location
+			player.fallSpd = 0;
+			player.setDefaultLocation(640, 180, 50, 50);
 		}
 	}
 
 	public void checkCollitions()
-	{	
+	{
 		player.collidingTop = false;
 		player.collidingBot = false;
 		player.collidingRight = false;
@@ -60,23 +70,23 @@ public class InfinityTest
 			int platformY = platforms.get(i).y;
 			int platformW = platforms.get(i).width;
 			int platformH = platforms.get(i).height;
-			if(player.y <= platformY + platformH && 
-				player.y + player.size >= platformY && 
-				player.x <= platformX + platformW && 
-				player.x + player.size >= platformX)
+			if(player.y <= platformY + platformH
+				&& player.y + player.size >= platformY
+				&& player.x <= platformX + platformW
+				&& player.x + player.size >= platformX)
 			{
-				if(player.x <= platformX + platformW - 2 &&
-					player.x + player.size - 2 >= platformX &&
-					player.y > platformY)
+				if(player.x <= platformX + platformW - 2
+					&& player.x + player.size - 2 >= platformX
+					&& player.y > platformY)
 				{
 					player.collidingTop = false;
 					player.jumping = false;
 					player.falling = true;
 					player.jumpSpd = player.jumpOriginalVal;
 				}
-				if(player.x <= platformX + platformW - 2 &&
-					player.x + player.size - 2 >= platformX &&
-					player.y + player.size < platformY + platformH)
+				if(player.x <= platformX + platformW - 2
+					&& player.x + player.size - 2 >= platformX
+					&& player.y + player.size < platformY + platformH)
 				{
 					player.y = platformY - player.size;
 					player.collidingBot = true;

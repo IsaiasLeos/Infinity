@@ -2,23 +2,25 @@
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 
-public class GraphicalEngine extends JPanel implements Runnable, MouseListener
+public class GraphicalEngine extends JPanel implements Runnable, MouseListener, KeyListener
 {
-	
+
 	public final int WIDTH = 1280;
 	public final int HEIGHT = 720;
 	private Thread thread;
 	private boolean running;
 	private final int fps = 60;
-	private final long targetTime = 1000/fps;
+	private final long targetTime = 1000 / fps;
 
 	public InfinityTest game = new InfinityTest();
-	
+
 	public GraphicalEngine()
 	{
 		initComponents();
@@ -31,6 +33,7 @@ public class GraphicalEngine extends JPanel implements Runnable, MouseListener
 		window.setResizable(false);
 		this.setPreferredSize(new Dimension(WIDTH, HEIGHT));
 		this.addMouseListener(this);
+		this.addKeyListener(this);
 		this.setFocusable(true);
 		window.add(this);
 		window.pack();
@@ -49,12 +52,13 @@ public class GraphicalEngine extends JPanel implements Runnable, MouseListener
 
 	public void run()
 	{
-		while(running){
+		while(running)
+		{
 			Long start = System.nanoTime();
 			tick();
 			repaint();
 			Long elapsed = System.nanoTime() - start;
-			Long wait = targetTime - elapsed/1000000;
+			Long wait = targetTime - elapsed / 1000000;
 			if(wait <= 0)
 			{
 				wait = (long) 5;
@@ -71,7 +75,7 @@ public class GraphicalEngine extends JPanel implements Runnable, MouseListener
 	}
 
 	/**
-	 * 
+	 *
 	 */
 	public void tick()
 	{
@@ -79,8 +83,8 @@ public class GraphicalEngine extends JPanel implements Runnable, MouseListener
 	}
 
 	/**
-	 * 
-	 * @param g 
+	 *
+	 * @param g
 	 */
 	public void paintComponent(Graphics g)
 	{
@@ -93,16 +97,33 @@ public class GraphicalEngine extends JPanel implements Runnable, MouseListener
 	{
 		game.mousePressed(event);
 	}
-	public void	mouseClicked(MouseEvent event)
+
+	public void mouseClicked(MouseEvent event)
 	{
 	}
+
 	public void mouseEntered(MouseEvent event)
 	{
 	}
+
 	public void mouseExited(MouseEvent event)
 	{
 	}
+
 	public void mouseReleased(MouseEvent event)
+	{
+	}
+
+	public void keyTyped(KeyEvent event)
+	{
+		game.keyTyped(event.getKeyChar());
+	}
+
+	public void keyReleased(KeyEvent event)
+	{
+	}
+
+	public void keyPressed(KeyEvent e)
 	{
 	}
 
