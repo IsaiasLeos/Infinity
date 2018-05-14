@@ -51,7 +51,7 @@ public class Player
 
 	/**
 	 * Draws the player.
-	 * @param g
+	 * @param g2
 	 */
 	public void draw(Graphics2D g2)
 	{
