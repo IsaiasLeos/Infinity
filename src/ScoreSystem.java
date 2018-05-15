@@ -16,23 +16,19 @@ public class ScoreSystem
 	public int highScore;
 	public int[] scoreboard = new int[3];
 
-	public ScoreSystem()
-	{
-		readScoreFile();
-		writeHighScore();
-	}
-
 	public void readScoreFile()
 	{
 		try
 		{
-			FileOutputStream newFile = new FileOutputStream(getClass().getResource("scoreboard.txt"), true);
-			Scanner scnr = new Scanner(new File(ScoreSystem.class.getResource("scoreboard.txt")));
+			FileOutputStream newFile = new FileOutputStream(new File("Data/scoreboard.txt"), true);
+			Scanner scnr = new Scanner(new File("Data/scoreboard.txt"));
 			if(scnr.hasNextLine())
 			{
 				Scanner lineScnr = new Scanner(scnr.nextLine());
 				highScore = lineScnr.nextInt();
 			}
+			newFile.close();
+			scnr.close();
 		}
 		catch(Exception e)
 		{
@@ -44,7 +40,7 @@ public class ScoreSystem
 	{
 		try
 		{
-			BufferedWriter writer = new BufferedWriter(new FileWriter(ScoreSystem.class.getResource("scoreboard.txt")));
+			BufferedWriter writer = new BufferedWriter(new FileWriter(new File("Data/scoreboard.txt")));
 			String scr = Integer.toString(highScore);
 			writer.write(scr);
 			writer.close();

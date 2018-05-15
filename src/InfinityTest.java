@@ -15,6 +15,7 @@ public class InfinityTest
 
 	public void onCreate()
 	{
+		scoreboard.readScoreFile();
 		for(int i = 0; i < 50; i++)
 		{
 			platforms.add(new PlatformGenerator(i * 300, 400));
@@ -39,7 +40,6 @@ public class InfinityTest
 
 	public void draw(Graphics2D g)
 	{
-		scoreboard.readScoreFile();
 		player.draw(g);
 		for(int i = 0; i < platforms.size(); i++)
 		{
@@ -108,11 +108,11 @@ public class InfinityTest
 						player.falling = false;
 						player.fallSpd = 0;
 					}
-					if(player.x + player.size == platformX + 1)
+					if(player.x + player.size == platformX)
 					{
 						player.collidingRight = true;
 					}
-					if(player.x == platformX + platformW + 1)
+					if(player.x == platformX + platformW)
 					{
 						player.collidingLeft = true;
 					}
