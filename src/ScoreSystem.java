@@ -75,7 +75,7 @@ public class ScoreSystem
 	{
 		try
 		{
-			BufferedWriter writer = new BufferedWriter(new FileWriter(new File("C:\\Users\\Blade\\AppData\\Roaming\\Infinity\\scoreboard.txt")));
+			BufferedWriter writer = new BufferedWriter(new FileWriter(new File(gameFilePath)));
 			String scr = Integer.toString(highScore);
 			writer.write(scr);
 			writer.close();
