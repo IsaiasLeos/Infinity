@@ -23,9 +23,6 @@ public class ScoreSystem
 		gameFolderPath = System.getProperty("user.dir") + "\\src\\data";
 		gameFilePath = gameFolderPath + "\\scoreboard.txt";
 
-		System.out.println(gameFolderPath);
-		System.out.println(gameFilePath);
-
 		File gameFolder = new File(gameFolderPath);
 		if(!gameFolder.exists())
 		{//Folder doesn't exist. Create it
