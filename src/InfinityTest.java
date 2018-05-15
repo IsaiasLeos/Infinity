@@ -15,11 +15,12 @@ public class InfinityTest
 
 	public void onCreate()
 	{
-		scoreboard.readScoreFile();
+//		scoreboard.readScoreFile();
 		for(int i = 0; i < 50; i++)
 		{
 			platforms.add(new PlatformGenerator(i * 300, 400));
 		}
+//		scoreboard.writeHighScore();
 	}
 
 	public void update()
@@ -53,7 +54,7 @@ public class InfinityTest
 
 	public void mousePressed(MouseEvent event)
 	{//Player jumps
-		
+
 		if(!player.jumping && !player.falling)
 		{
 			player.jumping = true;
