@@ -27,6 +27,7 @@ public class InfinityTest
 	public void update()
 	{
 		checkCollitions();
+		systemScore();
 		player.update();
 		for(int i = 0; i < platforms.size(); i++)
 		{
@@ -38,6 +39,10 @@ public class InfinityTest
 				}
 			}
 		}
+	}
+
+	public void systemScore()
+	{
 		scoreboard.score++;
 		if(scoreboard.score > scoreboard.highScore)
 		{
