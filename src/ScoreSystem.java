@@ -15,10 +15,12 @@ public class ScoreSystem
 
 	public int score;
 	public int highScore;
-	public int[] scoreboard = new int[3];
 	public String gameFolderPath = System.getProperty("user.dir") + "\\src\\Data";
 	public String gameFilePath = gameFolderPath + "\\scoreboard.txt";
 
+	/**
+	 * Creates the scoreboard file if non-existent.
+	 */
 	public void fileCreationIfNonExistent()
 	{
 		File gameFolder = new File(gameFolderPath);
@@ -46,39 +48,56 @@ public class ScoreSystem
 		}
 	}
 
+	/**
+	 * Updates the score of the game.
+	 * @return returns whether there is a new higher score.
+	 */
+	public boolean systemScore()
+	{
+		score++;
+		if(score > highScore)
+		{
+			highScore = score;
+			writeHighScore();
+			return true;
+		}
+		return false;
+	}
+
+	/**
+	 * Reads the file scoreboard and sets the high score.
+	 */
 	public void readScoreFile()
 	{
-		try
+		try(FileOutputStream newFile = new FileOutputStream(new File(gameFilePath), true))
 		{
-			FileOutputStream newFile = new FileOutputStream(new File(gameFilePath), true);
 			Scanner scnr = new Scanner(new File(gameFilePath));
 			if(scnr.hasNextLine())
 			{
 				Scanner lineScnr = new Scanner(scnr.nextLine());
 				highScore = lineScnr.nextInt();
 			}
-			newFile.close();
 			scnr.close();
 		}
-		catch(Exception e)
+		catch(IOException e)
 		{
 			e.printStackTrace();
 		}
 	}
 
+	/**
+	 * Writes the current score to the highscore.
+	 */
 	public void writeHighScore()
 	{
-		try
+		try(BufferedWriter writer = new BufferedWriter(new FileWriter(new File(gameFilePath))))
 		{
-			BufferedWriter writer = new BufferedWriter(new FileWriter(new File(gameFilePath)));
 			String scr = Integer.toString(highScore);
 			writer.write(scr);
-			writer.close();
 		}
-		catch(Exception e)
+		catch(IOException e)
 		{
 			e.printStackTrace();
 		}
 	}
-
 }

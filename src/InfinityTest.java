@@ -7,11 +7,9 @@ import java.util.LinkedList;
 public class InfinityTest
 {
 
-	public LinkedList<PlatformGenerator> platforms = new LinkedList<PlatformGenerator>();
+	public LinkedList<PlatformGenerator> platforms = new LinkedList<>();
 	public Player player = new Player(50, 50, 50, 50);//Spawn Location
 	public ScoreSystem scoreboard = new ScoreSystem();
-
-	public boolean isMoving;
 
 	public void onCreate()
 	{
@@ -21,13 +19,12 @@ public class InfinityTest
 		{
 			platforms.add(new PlatformGenerator(i * 300, 400));
 		}
-
 	}
 
 	public void update()
 	{
-		checkCollitions();
-		systemScore();
+		checkCollisions();
+		scoreboard.systemScore();
 		player.update();
 		for(int i = 0; i < platforms.size(); i++)
 		{
@@ -41,21 +38,15 @@ public class InfinityTest
 		}
 	}
 
-	public void systemScore()
-	{
-		scoreboard.score++;
-		if(scoreboard.score > scoreboard.highScore)
-		{
-			scoreboard.highScore = scoreboard.score;
-			scoreboard.writeHighScore();
-		}
-	}
-
 	public void draw(Graphics2D g)
 	{
 		player.draw(g);
-		g.drawString(Integer.toString(scoreboard.highScore), 1230, 50);
-		g.drawString(Integer.toString(scoreboard.score), 1230, 100);
+		do
+		{
+			g.drawString(Integer.toString(scoreboard.score), 1230, 100);
+			g.drawString(Integer.toString(scoreboard.highScore), 1230, 50);
+		}
+		while(scoreboard.systemScore());
 		for(int i = 0; i < platforms.size(); i++)
 		{
 			for(int j = 0; j < platforms.get(i).plat.size(); j++)
@@ -63,30 +54,38 @@ public class InfinityTest
 				platforms.get(i).plat.get(j).draw(g);
 			}
 		}
-
 	}
 
 	public void mousePressed(MouseEvent event)
 	{//Player jumps
-
 		if(!player.jumping && !player.falling)
 		{
 			player.jumping = true;
 		}
+		//Displays information of where the mouse was clicked.
+		System.out.println(event);
 	}
 
+	/**
+	 * Checks what keys you pressed.
+	 * @param event
+	 */
 	public void keyTyped(KeyEvent event)
 	{
 		char letterPressed = event.getKeyChar();
 		if('r' == letterPressed || 'R' == letterPressed)
-		{
-			//Reset Spawn Location
+		{//Reset Spawn Location
 			player.fallSpd = 0;
-			player.setDefaultLocation(640, 180);
+			player.setLocation(640, 180);
 		}
+		//Displays the about the key being pressed.
+		System.out.println(event);
 	}
 
-	public void checkCollitions()
+	/**
+	 * Checks the players collisions.
+	 */
+	public void checkCollisions()
 	{
 		player.collidingTop = false;
 		player.collidingBot = false;
