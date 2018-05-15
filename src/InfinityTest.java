@@ -15,6 +15,7 @@ public class InfinityTest
 
 	public void onCreate()
 	{
+		scoreboard.fileCreationIfNonExistent();
 		scoreboard.readScoreFile();
 		for(int i = 0; i < 50; i++)
 		{

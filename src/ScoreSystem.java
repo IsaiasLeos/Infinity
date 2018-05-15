@@ -3,6 +3,7 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.FileWriter;
+import java.io.IOException;
 import java.util.Scanner;
 
 /**
@@ -17,6 +18,33 @@ public class ScoreSystem
 	public int[] scoreboard = new int[3];
 	public String gameFolderPath = System.getProperty("user.dir") + "\\src\\Data";
 	public String gameFilePath = gameFolderPath + "\\scoreboard.txt";
+
+	public void fileCreationIfNonExistent()
+	{
+		File gameFolder = new File(gameFolderPath);
+		if(!gameFolder.exists())
+		{//Folder doesn't exist. Create it
+			gameFolder.mkdir();//Folder created
+			File gameFile = new File(gameFilePath);
+			if(!gameFile.exists())
+			{// File doesn't exists, create it
+				try
+				{//scoreboard created in data folder
+					gameFile.createNewFile();
+				}
+				catch(IOException e)
+				{
+					e.printStackTrace();
+				}
+			}
+			else
+			{//File exists
+			}
+		}
+		else
+		{//Error
+		}
+	}
 
 	public void readScoreFile()
 	{
