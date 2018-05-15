@@ -15,6 +15,7 @@ public class InfinityTest
 
 	public void onCreate()
 	{
+		scoreboard.readScoreFile();
 		for(int i = 0; i < 50; i++)
 		{
 			platforms.add(new PlatformGenerator(i * 300, 400));
@@ -36,11 +37,19 @@ public class InfinityTest
 				}
 			}
 		}
+		scoreboard.score++;
+		if(scoreboard.score > scoreboard.highScore)
+		{
+			scoreboard.highScore = scoreboard.score;
+			scoreboard.writeHighScore();
+		}
 	}
 
 	public void draw(Graphics2D g)
 	{
 		player.draw(g);
+		g.drawString(Integer.toString(scoreboard.highScore), 1230, 50);
+		g.drawString(Integer.toString(scoreboard.score), 1230, 100);
 		for(int i = 0; i < platforms.size(); i++)
 		{
 			for(int j = 0; j < platforms.get(i).plat.size(); j++)

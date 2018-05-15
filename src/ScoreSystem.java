@@ -15,13 +15,15 @@ public class ScoreSystem
 	public int score;
 	public int highScore;
 	public int[] scoreboard = new int[3];
+	public String gameFolderPath = System.getProperty("user.dir") + "\\src\\Data";
+	public String gameFilePath = gameFolderPath + "\\scoreboard.txt";
 
 	public void readScoreFile()
 	{
 		try
 		{
-			FileOutputStream newFile = new FileOutputStream(new File("Data/scoreboard.txt"), true);
-			Scanner scnr = new Scanner(new File("Data/scoreboard.txt"));
+			FileOutputStream newFile = new FileOutputStream(new File(gameFilePath), true);
+			Scanner scnr = new Scanner(new File(gameFilePath));
 			if(scnr.hasNextLine())
 			{
 				Scanner lineScnr = new Scanner(scnr.nextLine());
@@ -40,7 +42,7 @@ public class ScoreSystem
 	{
 		try
 		{
-			BufferedWriter writer = new BufferedWriter(new FileWriter(new File("Data/scoreboard.txt")));
+			BufferedWriter writer = new BufferedWriter(new FileWriter(new File(gameFilePath)));
 			String scr = Integer.toString(highScore);
 			writer.write(scr);
 			writer.close();
