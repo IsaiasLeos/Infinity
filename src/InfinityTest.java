@@ -15,12 +15,12 @@ public class InfinityTest
 
 	public void onCreate()
 	{
-//		scoreboard.readScoreFile();
+		scoreboard.readScoreFile();
 		for(int i = 0; i < 50; i++)
 		{
 			platforms.add(new PlatformGenerator(i * 300, 400));
 		}
-//		scoreboard.writeHighScore();
+		scoreboard.writeHighScore();
 	}
 
 	public void update()

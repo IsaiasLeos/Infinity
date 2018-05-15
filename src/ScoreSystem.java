@@ -55,8 +55,8 @@ public class ScoreSystem
 	{
 		try
 		{
-			FileOutputStream newFile = new FileOutputStream(new File("C:\\Users\\Blade\\AppData\\Roaming\\Infinity\\scoreboard.txt"), true);
-			Scanner scnr = new Scanner(new File("C:\\Users\\Blade\\AppData\\Roaming\\Infinity\\scoreboard.txt"));
+			FileOutputStream newFile = new FileOutputStream(new File(gameFilePath), true);
+			Scanner scnr = new Scanner(new File(gameFilePath));
 			if(scnr.hasNextLine())
 			{
 				Scanner lineScnr = new Scanner(scnr.nextLine());
