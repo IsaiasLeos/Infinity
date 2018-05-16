@@ -2,19 +2,16 @@
 import java.util.LinkedList;
 import java.util.Random;
 
-public class PlatformGenerator
-{
+public class PlatformGenerator {
 
 	public LinkedList<Platform> plat = new LinkedList<>();
 	public int x;
 	public int y;
 
-	public PlatformGenerator(int x, int y)
-	{
+	public PlatformGenerator(int x, int y) {
 		Random rng = new Random();
 		int platformNum = rng.nextInt(5);
-		switch(platformNum)
-		{
+		switch(platformNum) {
 			case 0:
 				Platform p1 = new Platform(x, y, 150, 100);
 				plat.add(p1);

@@ -6,8 +6,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Scanner;
 
-public class ScoreSystem
-{
+public class ScoreSystem {
 
 	public int score;
 	public int highScore;
@@ -17,30 +16,23 @@ public class ScoreSystem
 	/**
 	 * Creates the scoreboard file if non-existent.
 	 */
-	public void fileCreationIfNonExistent()
-	{
+	public void fileCreationIfNonExistent() {
 		File gameFolder = new File(gameFolderPath);
-		if(!gameFolder.exists())
-		{//Folder doesn't exist. Create it
+		if(!gameFolder.exists()) {//Folder doesn't exist. Create it
 			gameFolder.mkdir();//Folder created
 			File gameFile = new File(gameFilePath);
-			if(!gameFile.exists())
-			{// File doesn't exists, create it
-				try
-				{//scoreboard created in data folder
+			if(!gameFile.exists()) {// File doesn't exists, create it
+				try {//scoreboard created in data folder
 					gameFile.createNewFile();
 				}
-				catch(IOException e)
-				{
+				catch(IOException e) {
 					e.printStackTrace();
 				}
 			}
-			else
-			{//File exists
+			else {//File exists
 			}
 		}
-		else
-		{//Error
+		else {//Error
 		}
 	}
 
@@ -48,11 +40,9 @@ public class ScoreSystem
 	 * Updates the score of the game.
 	 * @return returns whether there is a new higher score.
 	 */
-	public boolean systemScore()
-	{
+	public boolean systemScore() {
 		score++;
-		if(score > highScore)
-		{
+		if(score > highScore) {
 			highScore = score;
 			writeHighScore();
 			return true;
@@ -63,20 +53,16 @@ public class ScoreSystem
 	/**
 	 * Reads the file scoreboard and sets the high score.
 	 */
-	public void readScoreFile()
-	{
-		try(FileOutputStream newFile = new FileOutputStream(new File(gameFilePath), true))
-		{
+	public void readScoreFile() {
+		try(FileOutputStream newFile = new FileOutputStream(new File(gameFilePath), true)) {
 			Scanner scnr = new Scanner(new File(gameFilePath));
-			if(scnr.hasNextLine())
-			{
+			if(scnr.hasNextLine()) {
 				Scanner lineScnr = new Scanner(scnr.nextLine());
 				highScore = lineScnr.nextInt();
 			}
 			scnr.close();
 		}
-		catch(IOException e)
-		{
+		catch(IOException e) {
 			e.printStackTrace();
 		}
 	}
@@ -84,15 +70,12 @@ public class ScoreSystem
 	/**
 	 * Writes the current score to the high score.
 	 */
-	public void writeHighScore()
-	{
-		try(BufferedWriter writer = new BufferedWriter(new FileWriter(new File(gameFilePath))))
-		{
+	public void writeHighScore() {
+		try(BufferedWriter writer = new BufferedWriter(new FileWriter(new File(gameFilePath)))) {
 			String scr = Integer.toString(highScore);
 			writer.write(scr);
 		}
-		catch(IOException e)
-		{
+		catch(IOException e) {
 			e.printStackTrace();
 		}
 	}
