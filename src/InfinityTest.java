@@ -9,6 +9,7 @@ public class InfinityTest {
 	public LinkedList<PlatformGenerator> platforms = new LinkedList<>();
 	public Player player = new Player(50, 50, 50, 50);//Spawn Location
 	public ScoreSystem scoreboard = new ScoreSystem();
+	public char keyCode;
 
 	public void onCreate() {
 		scoreboard.fileCreationIfNonExistent();
@@ -33,11 +34,13 @@ public class InfinityTest {
 
 	public void draw(Graphics2D g) {
 		player.draw(g);
-		do {
-			g.drawString(Integer.toString(scoreboard.score), 1230, 100);
+		do {//visual representation of the score
 			g.drawString(Integer.toString(scoreboard.highScore), 1230, 50);
+			g.drawString(Integer.toString(scoreboard.score), 1230, 75);
 		}
 		while(scoreboard.systemScore());
+
+		g.drawString("Key: " + Character.toString(keyCode), 1230, 25);
 		for(int i = 0; i < platforms.size(); i++) {
 			for(int j = 0; j < platforms.get(i).plat.size(); j++) {
 				platforms.get(i).plat.get(j).draw(g);
@@ -59,6 +62,7 @@ public class InfinityTest {
 	 */
 	public void keyTyped(KeyEvent event) {
 		char letterPressed = event.getKeyChar();
+		keyCode = letterPressed;
 		if('r' == letterPressed || 'R' == letterPressed) {//Reset Spawn Location
 			player.fallSpd = 0;
 			player.setLocation(640, 180);

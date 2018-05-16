@@ -2,7 +2,6 @@
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
-import java.util.Timer;
 import javax.imageio.ImageIO;
 
 /**
@@ -33,10 +32,6 @@ public class Player {
 
 	public BufferedImage playerImage;
 
-	private Timer animate;
-	public BufferedImage imageTest;
-	public BufferedImage[] animationTest = new BufferedImage[3];
-
 	/**
 	 * Creates the player at the given position.
 	 * @param x
@@ -62,7 +57,7 @@ public class Player {
 		catch(IOException e) {
 			e.printStackTrace();
 		}
-		g2.drawImage(playerImage, x, y, size, size, null); //draw the image
+		g2.drawImage(playerImage, x, y, size, size, null);//draw the image
 	}
 
 	/**
