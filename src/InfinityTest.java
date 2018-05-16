@@ -9,6 +9,7 @@ public class InfinityTest {
 	public LinkedList<PlatformGenerator> platforms = new LinkedList<>();
 	public Player player = new Player(50, 50, 50, 50);//Spawn Location
 	public ScoreSystem scoreboard = new ScoreSystem();
+	public PowerUps powerup = new PowerUps();
 	public char keyCode;
 	public int mouseCoordX;
 	public int mouseCoordY;
@@ -18,13 +19,15 @@ public class InfinityTest {
 		scoreboard.fileCreationIfNonExistent();
 		scoreboard.readScoreFile();
 		for(int i = 0; i < 50; i++) {
-			platforms.add(new PlatformGenerator(i * 300, 400));
+			platforms.add(new PlatformGenerator(i * 250, 400));
 		}
 	}
 
 	public void update() {
 		checkCollisions();
+		checkPotionCollision();
 		scoreboard.systemScore();
+		powerup.update();
 		player.update();
 		for(int i = 0; i < platforms.size(); i++) {
 			for(int j = 0; j < platforms.get(i).plat.size(); j++) {
@@ -42,17 +45,27 @@ public class InfinityTest {
 			g.drawString("Current Score: " + Integer.toString(scoreboard.score), 1150, 50);
 		}
 		while(scoreboard.systemScore());
-
 		if(debug) {
-			g.drawString("Key Pressed: " + Character.toString(keyCode), 1150, 75);
-			g.drawString("MouseX: " + Integer.toString(mouseCoordX), 1150, 100);
-			g.drawString("MouseY: " + Integer.toString(mouseCoordY), 1150, 125);
+			isDebugEnabled(g);
 		}
+		powerup.draw(g);
 		for(int i = 0; i < platforms.size(); i++) {
 			for(int j = 0; j < platforms.get(i).plat.size(); j++) {
 				platforms.get(i).plat.get(j).draw(g);
 			}
 		}
+	}
+
+	/**
+	 * Debug information
+	 * @param g
+	 */
+	public void isDebugEnabled(Graphics2D g) {
+		g.drawString("Key Pressed: " + Character.toString(keyCode), 1150, 75);
+		g.drawString("MouseX: " + Integer.toString(mouseCoordX), 1150, 100);
+		g.drawString("MouseY: " + Integer.toString(mouseCoordY), 1150, 125);
+		g.drawString("X: " + Integer.toString(player.x), 1150, 150);
+		g.drawString("Y: " + Integer.toString(player.y), 1150, 175);
 	}
 
 	public void mousePressed(MouseEvent event) {//Player jumps
@@ -76,15 +89,20 @@ public class InfinityTest {
 			player.fallSpd = 0;
 			player.setLocation(640, 180);
 		}
-		if('0' == letterPressed) {//Enable Debug
-			debug = true;
+		if('0' == letterPressed) {//Enable Debug or Disable Debug
+			if(debug) {
+				debug = false;
+			}
+			else {
+				debug = true;
+			}
 		}
 		//Displays the about the key being pressed.
 //		System.out.println(event);
 	}
 
 	/**
-	 * Checks the players collisions.
+	 * Checks the power up collisions.
 	 */
 	public void checkCollisions() {
 		player.collidingTop = false;
@@ -126,6 +144,51 @@ public class InfinityTest {
 				}
 				if(!player.collidingBot) {
 					player.falling = true;
+				}
+			}
+		}
+	}
+
+	public void checkPotionCollision() {
+		powerup.collidingTop = false;
+		powerup.collidingBot = false;
+		powerup.collidingRight = false;
+		powerup.collidingLeft = false;
+		for(int i = 0; i < platforms.size(); i++) {
+			for(int j = 0; j < platforms.get(i).plat.size(); j++) {
+				int platformX = platforms.get(i).plat.get(j).x;
+				int platformY = platforms.get(i).plat.get(j).y;
+				int platformW = platforms.get(i).plat.get(j).width;
+				int platformH = platforms.get(i).plat.get(j).height;
+				if(powerup.y <= platformY + platformH
+					&& powerup.y + powerup.size >= platformY
+					&& powerup.x <= platformX + platformW
+					&& powerup.x + powerup.size >= platformX) {
+					if(powerup.x <= platformX + platformW - 2
+						&& powerup.x + powerup.size - 2 >= platformX
+						&& powerup.y > platformY) {
+						powerup.collidingTop = false;
+						powerup.jumping = false;
+						powerup.falling = true;
+						powerup.jumpSpd = powerup.jumpOriginalVal;
+					}
+					if(powerup.x <= platformX + platformW - 2
+						&& powerup.x + powerup.size - 2 >= platformX
+						&& powerup.y + powerup.size < platformY + platformH) {
+						powerup.y = platformY - powerup.size;
+						powerup.collidingBot = true;
+						powerup.falling = false;
+						powerup.fallSpd = 0;
+					}
+					if(powerup.x + powerup.size == platformX + 1) {
+						powerup.collidingRight = true;
+					}
+					if(powerup.x == platformX + platformW + 1) {
+						powerup.collidingLeft = true;
+					}
+				}
+				if(!powerup.collidingBot) {
+					powerup.falling = true;
 				}
 			}
 		}
