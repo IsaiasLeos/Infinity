@@ -6,10 +6,6 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Scanner;
 
-/**
- *
- * @author Isaias Leos Ayala
- */
 public class ScoreSystem
 {
 
@@ -86,7 +82,7 @@ public class ScoreSystem
 	}
 
 	/**
-	 * Writes the current score to the highscore.
+	 * Writes the current score to the high score.
 	 */
 	public void writeHighScore()
 	{

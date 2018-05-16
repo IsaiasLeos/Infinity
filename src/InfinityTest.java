@@ -63,7 +63,7 @@ public class InfinityTest
 			player.jumping = true;
 		}
 		//Displays information of where the mouse was clicked.
-		System.out.println(event);
+//		System.out.println(event);
 	}
 
 	/**
@@ -79,7 +79,7 @@ public class InfinityTest
 			player.setLocation(640, 180);
 		}
 		//Displays the about the key being pressed.
-		System.out.println(event);
+//		System.out.println(event);
 	}
 
 	/**

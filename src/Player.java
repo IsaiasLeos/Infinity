@@ -5,17 +5,13 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import javax.imageio.ImageIO;
 
-/**
- *
- * @author Isaias Leos Ayala, Ivan Mota
- */
 public class Player
 {
 
 	public int x;//coordinates of player
 	public int y;
 	public int jumpSpeed;
-	public final int size = 32;//original size
+	public int size = 64;//original size
 	public int newSize = size;
 
 	public double maxJumpSpd = 0;
@@ -63,7 +59,7 @@ public class Player
 		{
 			e.printStackTrace();
 		}
-		
+
 		//create the rectangle base model
 		Rectangle2D rect = new Rectangle2D.Double(x, y, size, size);
 		g2.fill(rect);//draws the base model
@@ -73,7 +69,7 @@ public class Player
 	/**
 	 * Sets the players location given the coordinates
 	 * @param x
-	 * @param y 
+	 * @param y
 	 */
 	public void setLocation(int x, int y)
 	{

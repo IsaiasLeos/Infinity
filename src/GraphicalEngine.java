@@ -11,6 +11,7 @@ import javax.swing.JPanel;
 
 public class GraphicalEngine extends JPanel implements Runnable, MouseListener, KeyListener
 {
+
 	private static final long serialVersionUID = 1L;
 
 	public final int WIDTH = 1280;
