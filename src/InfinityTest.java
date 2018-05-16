@@ -10,6 +10,9 @@ public class InfinityTest {
 	public Player player = new Player(50, 50, 50, 50);//Spawn Location
 	public ScoreSystem scoreboard = new ScoreSystem();
 	public char keyCode;
+	public int mouseCoordX;
+	public int mouseCoordY;
+	public boolean debug;
 
 	public void onCreate() {
 		scoreboard.fileCreationIfNonExistent();
@@ -35,12 +38,16 @@ public class InfinityTest {
 	public void draw(Graphics2D g) {
 		player.draw(g);
 		do {//visual representation of the score
-			g.drawString(Integer.toString(scoreboard.highScore), 1230, 50);
-			g.drawString(Integer.toString(scoreboard.score), 1230, 75);
+			g.drawString("High Score: " + Integer.toString(scoreboard.highScore), 1150, 25);
+			g.drawString("Current Score: " + Integer.toString(scoreboard.score), 1150, 50);
 		}
 		while(scoreboard.systemScore());
 
-		g.drawString("Key: " + Character.toString(keyCode), 1230, 25);
+		if(debug) {
+			g.drawString("Key Pressed: " + Character.toString(keyCode), 1150, 75);
+			g.drawString("MouseX: " + Integer.toString(mouseCoordX), 1150, 100);
+			g.drawString("MouseY: " + Integer.toString(mouseCoordY), 1150, 125);
+		}
 		for(int i = 0; i < platforms.size(); i++) {
 			for(int j = 0; j < platforms.get(i).plat.size(); j++) {
 				platforms.get(i).plat.get(j).draw(g);
@@ -52,6 +59,8 @@ public class InfinityTest {
 		if(!player.jumping && !player.falling) {
 			player.jumping = true;
 		}
+		mouseCoordX = event.getX();
+		mouseCoordY = event.getY();
 		//Displays information of where the mouse was clicked.
 //		System.out.println(event);
 	}
@@ -66,6 +75,9 @@ public class InfinityTest {
 		if('r' == letterPressed || 'R' == letterPressed) {//Reset Spawn Location
 			player.fallSpd = 0;
 			player.setLocation(640, 180);
+		}
+		if('0' == letterPressed) {//Enable Debug
+			debug = true;
 		}
 		//Displays the about the key being pressed.
 //		System.out.println(event);
