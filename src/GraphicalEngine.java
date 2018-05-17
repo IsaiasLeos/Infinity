@@ -19,7 +19,6 @@ public class GraphicalEngine extends JPanel implements Runnable, MouseListener, 
 	private boolean running;
 	private final int fps = 60;
 	private final long targetTime = 1000 / fps;
-	public boolean debug;
 
 	public InfinityTest game = new InfinityTest();
 
@@ -107,5 +106,4 @@ public class GraphicalEngine extends JPanel implements Runnable, MouseListener, 
 	public static void main(String[] args) {
 		GraphicalEngine engine = new GraphicalEngine();
 	}
-
 }

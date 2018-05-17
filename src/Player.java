@@ -1,8 +1,7 @@
 
 import java.awt.Graphics2D;
+import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
-import java.io.IOException;
-import javax.imageio.ImageIO;
 
 /**
  *
@@ -37,7 +36,7 @@ public class Player {
 	 * @param x
 	 * @param y
 	 * @param jumpSpeed
-	 * @param size
+	 * @param newSize
 	 */
 	public Player(int x, int y, int jumpSpeed, int newSize) {
 		this.x = x;
@@ -51,13 +50,15 @@ public class Player {
 	 * @param g2
 	 */
 	public void draw(Graphics2D g2) {
-		try {//sets the player image
-			playerImage = ImageIO.read(getClass().getResourceAsStream("Assets/green.png"));
-		}
-		catch(IOException e) {
-			e.printStackTrace();
-		}
-		g2.drawImage(playerImage, x, y, size, size, null);//draw the image
+//		try {//sets the player image
+//			playerImage = ImageIO.read(getClass().getResourceAsStream("assets/green.png"));
+//		}
+//		catch(IOException e) {
+//			e.printStackTrace();
+//		}
+//		g2.drawImage(playerImage, x, y, size, size, null);//draw the image
+		Rectangle2D rect = new Rectangle2D.Double(x, y, size, size);
+		g2.fill(rect);
 	}
 
 	/**
