@@ -16,6 +16,9 @@ public class InfinityTest {
 	public boolean debug;
 	public int rectCoord;
 
+	/**
+	 * Commands that are to be called before anything is drawn or updated.
+	 */
 	public void onCreate() {
 		scoreboard.createFile();
 		scoreboard.readScoreFile();
@@ -63,7 +66,7 @@ public class InfinityTest {
 	}
 
 	/**
-	 * Debug information.
+	 * Debug information. Press 0 to display in game information
 	 * @param g
 	 */
 	public void isDebugEnabled(Graphics2D g) {
@@ -87,27 +90,28 @@ public class InfinityTest {
 	}
 
 	/**
-	 * Events when the mouse is pressed.
+	 * An event which indicates that a mouse action occurred.
 	 * @param event
 	 */
 	public void mousePressed(MouseEvent event) {//Player jumps
 		if(!player.jumping && !player.falling) {
 			player.jumping = true;
 		}
-		mouseCoordX = event.getX();
+		mouseCoordX = event.getX();//For Debug
 		mouseCoordY = event.getY();
+		
 		//Displays information of where the mouse was clicked.
 //		System.out.println(event);
 	}
 
 	/**
-	 * Events when the mouse is pressed.
+	 * An event which indicates that a key action occurred
 	 * @param event
 	 */
 	public void keyTyped(KeyEvent event) {
 		char letterPressed = event.getKeyChar();
 
-		keyCode = letterPressed;//For Debug Information
+		keyCode = letterPressed;//For Debug
 
 		if('r' == letterPressed || 'R' == letterPressed) {//Reset Spawn Location
 			player.fallSpd = 0;
