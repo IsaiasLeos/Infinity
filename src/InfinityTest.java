@@ -9,7 +9,7 @@ public class InfinityTest {
 	public LinkedList<PlatformGenerator> platforms = new LinkedList<>();
 	public Player player = new Player(50, 50, 50, 50);//Spawn Location
 	public ScoreSystem scoreboard = new ScoreSystem();
-	public PowerUps potion = new PowerUps();
+	public Potion potion = new Potion();
 	public char keyCode;
 	public int mouseCoordX;
 	public int mouseCoordY;
@@ -30,31 +30,31 @@ public class InfinityTest {
 		scoreboard.systemScore();
 		player.update();
 		potion.update();
-		if(player.x == potion.x && player.y == potion.y ) {
-			potion.itemCollided = true;
-		}
+
+		//Checks whether the anything is colliding with the ride side of the platform.
+		//Stops movement of platforms if anything is colliding.
 		for(int i = 0; i < platforms.size(); i++) {
 			for(int j = 0; j < platforms.get(i).plat.size(); j++) {
 				if(!player.collidingRight) {
 					platforms.get(i).plat.get(j).x -= 2;
+					potion.movement = 2;
 					if(debug) {
 						rectCoord = platforms.get(i).plat.get(j).x;
 					}
+				}
+				else {
+					potion.movement = 0;
 				}
 			}
 		}
 	}
 
-	public void isPlayerDead() {
-
-	}
-
 	public void draw(Graphics2D g) {
-		player.draw(g);
-		potion.draw(g);
 		if(debug) {
 			isDebugEnabled(g);
 		}
+		player.draw(g);
+		potion.draw(g);
 		for(int i = 0; i < platforms.size(); i++) {
 			for(int j = 0; j < platforms.get(i).plat.size(); j++) {
 				platforms.get(i).plat.get(j).draw(g);
@@ -63,7 +63,7 @@ public class InfinityTest {
 	}
 
 	/**
-	 * Debug information
+	 * Debug information.
 	 * @param g
 	 */
 	public void isDebugEnabled(Graphics2D g) {
@@ -86,6 +86,10 @@ public class InfinityTest {
 		}
 	}
 
+	/**
+	 * Events when the mouse is pressed.
+	 * @param event
+	 */
 	public void mousePressed(MouseEvent event) {//Player jumps
 		if(!player.jumping && !player.falling) {
 			player.jumping = true;
@@ -97,17 +101,19 @@ public class InfinityTest {
 	}
 
 	/**
-	 * Checks what keys you pressed.
+	 * Events when the mouse is pressed.
 	 * @param event
 	 */
 	public void keyTyped(KeyEvent event) {
 		char letterPressed = event.getKeyChar();
-		keyCode = letterPressed;
+
+		keyCode = letterPressed;//For Debug Information
+
 		if('r' == letterPressed || 'R' == letterPressed) {//Reset Spawn Location
 			player.fallSpd = 0;
 			player.setLocation(640, 180);
 		}
-		if('0' == letterPressed) {//Enable Debug or Disable Debug
+		if('0' == letterPressed) {//Enable or Disable Debug Info
 			if(debug) {
 				debug = false;
 			}
@@ -119,7 +125,15 @@ public class InfinityTest {
 //		System.out.println(event);
 	}
 
+	/**
+	 * Checks the items collisions.
+	 */
 	public void checkPotionCollision() {
+		if((player.x - (player.size / 2)
+			== potion.x || player.x + (player.size / 2)
+			== potion.x) && player.y == potion.y) {
+			potion.itemCollided = true;
+		}
 		potion.collidingTop = false;
 		potion.collidingBot = false;
 		for(int i = 0; i < platforms.size(); i++) {
@@ -134,11 +148,25 @@ public class InfinityTest {
 					&& potion.x + potion.size >= platformX) {
 					if(potion.x <= platformX + platformW - 2
 						&& potion.x + potion.size - 2 >= platformX
+						&& potion.y > platformY) {
+						potion.collidingTop = false;
+						potion.jumping = false;
+						potion.falling = true;
+						potion.jumpSpd = potion.jumpOriginalVal;
+					}
+					if(potion.x <= platformX + platformW - 2
+						&& potion.x + potion.size - 2 >= platformX
 						&& potion.y + potion.size < platformY + platformH) {
 						potion.y = platformY - potion.size;
 						potion.collidingBot = true;
 						potion.falling = false;
 						potion.fallSpd = 0;
+					}
+					if(potion.x + potion.size == platformX && potion.y + potion.size != platformY) {
+						potion.collidingRight = true;
+					}
+					if(potion.x == platformX + platformW) {
+						potion.collidingLeft = true;
 					}
 				}
 				if(!potion.collidingBot) {
@@ -149,7 +177,7 @@ public class InfinityTest {
 	}
 
 	/**
-	 * Checks the power up collisions.
+	 * Checks the player's collisions.
 	 */
 	public void checkCollisions() {
 		player.collidingTop = false;

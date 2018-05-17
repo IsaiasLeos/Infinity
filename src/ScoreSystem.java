@@ -24,6 +24,9 @@ public class ScoreSystem {
 		return false;
 	}
 
+	/**
+	 * Checks if score file exists, if it doesn't exist create it.
+	 */
 	public void createFile() {
 		try {
 			File tmpDir = new File("score.txt");

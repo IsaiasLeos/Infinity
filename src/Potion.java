@@ -8,10 +8,11 @@ import javax.imageio.ImageIO;
  *
  * @author Isaias, Ivan
  */
-public class PowerUps {
+public class Potion {
 
 	public int x;//coordinates of powerup
 	public int y;
+	public int movement;
 	public final int size = 32;//original size
 
 	public double maxJumpSpd = 0;
@@ -20,6 +21,7 @@ public class PowerUps {
 	public double jumpAcceler = 0.2;
 	public double fallSpd = 0;
 	public double fallAcceler = 0.15;
+
 	public boolean jumping;
 	public boolean falling;
 
@@ -34,9 +36,13 @@ public class PowerUps {
 	public double itemLocation = (Math.random() * (upperLimit - lowerLimit)) + lowerLimit;
 	public BufferedImage itemImage;
 
-	public PowerUps() {
+	public Potion() {
 	}
 
+	/**
+	 * Draws the potion item.
+	 * @param g2 
+	 */
 	public void draw(Graphics2D g2) {
 		try {
 			itemImage = ImageIO.read(getClass().getResourceAsStream("assets/potion.png"));
@@ -52,11 +58,14 @@ public class PowerUps {
 	public void resetLocation() {
 	}
 
+	/**
+	 * Updates the coordinates of the potion.
+	 */
 	public void update() {
 		if(!itemCollided) {
 			x = (int) itemLocation;
 			if(collidingBot) {
-				itemLocation -= 2;
+				itemLocation -= movement;
 			}
 			else {
 				y += fallSpd;

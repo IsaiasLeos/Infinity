@@ -24,7 +24,7 @@ public class Player {
 	public boolean jumping;
 	public boolean falling;
 
-	public boolean collidingTop;
+	public boolean collidingTop;//Collision Checks
 	public boolean collidingBot;
 	public boolean collidingLeft;
 	public boolean collidingRight;
@@ -71,12 +71,16 @@ public class Player {
 		this.y = y;
 	}
 
+	/**
+	 * Checks whether the player is "dead" or "alive."
+	 * @return 
+	 */
 	public boolean isPlayerDead() {
 		return y > 720 || x < 0;
 	}
 
 	/**
-	 * Updates the falling and jumping motions.
+	 * Updates the falling and jumping coordinates.
 	 */
 	public void update() {
 		if(jumping && !collidingTop) {
