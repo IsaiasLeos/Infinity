@@ -56,13 +56,14 @@ public class InfinityTest {
 	 * @param g
 	 */
 	public void isDebugEnabled(Graphics2D g) {
+		g.drawString("High Score: " + Integer.toString(scoreboard.highScore), 1150, 25);
+		g.drawString("Current Score: " + Integer.toString(scoreboard.score), 1150, 50);
 		g.drawString("Key Pressed: " + Character.toString(keyCode), 1150, 75);
 		g.drawString("MouseX: " + Integer.toString(mouseCoordX), 1150, 100);
 		g.drawString("MouseY: " + Integer.toString(mouseCoordY), 1150, 125);
 		g.drawString("X: " + Integer.toString(player.x), 1150, 150);
 		g.drawString("Y: " + Integer.toString(player.y), 1150, 175);
-		g.drawString("High Score: " + Integer.toString(scoreboard.highScore), 1150, 25);
-		g.drawString("Current Score: " + Integer.toString(scoreboard.score), 1150, 50);
+		g.drawString("isPlayerDead: " + Boolean.toString(player.isPlayerDead()), 1150, 200);
 	}
 
 	public void mousePressed(MouseEvent event) {//Player jumps

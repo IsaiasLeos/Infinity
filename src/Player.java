@@ -71,6 +71,10 @@ public class Player {
 		this.y = y;
 	}
 
+	public boolean isPlayerDead() {
+		return y > 720 || x < 0;
+	}
+
 	/**
 	 * Updates the falling and jumping motions.
 	 */
