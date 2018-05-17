@@ -12,7 +12,7 @@ public class Player {
 	public int x;//coordinates of player
 	public int y;
 	public int jumpSpeed;
-	public final int size = 32;//original size
+	public final int size = 50;//original size
 	public int newSize = size;
 
 	public double maxJumpSpd = 0;

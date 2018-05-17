@@ -133,10 +133,10 @@ public class InfinityTest {
 						player.falling = false;
 						player.fallSpd = 0;
 					}
-					if(player.x + player.size == platformX + 1) {
+					if(player.x + player.size == platformX && player.y + player.size != platformY) {
 						player.collidingRight = true;
 					}
-					if(player.x == platformX + platformW + 1) {
+					if(player.x == platformX + platformW) {
 						player.collidingLeft = true;
 					}
 				}
