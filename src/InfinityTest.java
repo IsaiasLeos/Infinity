@@ -9,10 +9,12 @@ public class InfinityTest {
 	public LinkedList<PlatformGenerator> platforms = new LinkedList<>();
 	public Player player = new Player(50, 50, 50, 50);//Spawn Location
 	public ScoreSystem scoreboard = new ScoreSystem();
+	public PowerUps potion = new PowerUps();
 	public char keyCode;
 	public int mouseCoordX;
 	public int mouseCoordY;
 	public boolean debug;
+	public int rectCoord;
 
 	public void onCreate() {
 		scoreboard.createFile();
@@ -24,12 +26,20 @@ public class InfinityTest {
 
 	public void update() {
 		checkCollisions();
+		checkPotionCollision();
 		scoreboard.systemScore();
 		player.update();
+		potion.update();
+		if(player.x == potion.x && player.y == potion.y ) {
+			potion.itemCollided = true;
+		}
 		for(int i = 0; i < platforms.size(); i++) {
 			for(int j = 0; j < platforms.get(i).plat.size(); j++) {
 				if(!player.collidingRight) {
 					platforms.get(i).plat.get(j).x -= 2;
+					if(debug) {
+						rectCoord = platforms.get(i).plat.get(j).x;
+					}
 				}
 			}
 		}
@@ -41,6 +51,7 @@ public class InfinityTest {
 
 	public void draw(Graphics2D g) {
 		player.draw(g);
+		potion.draw(g);
 		if(debug) {
 			isDebugEnabled(g);
 		}
@@ -64,6 +75,15 @@ public class InfinityTest {
 		g.drawString("X: " + Integer.toString(player.x), 1150, 150);
 		g.drawString("Y: " + Integer.toString(player.y), 1150, 175);
 		g.drawString("isPlayerDead: " + Boolean.toString(player.isPlayerDead()), 1150, 200);
+		g.drawString("rectangle Coord: " + Integer.toString(rectCoord), 1150, 225);
+		g.drawString("PotionX: " + Integer.toString(potion.x), 1150, 250);
+		g.drawString("PotionY: " + Integer.toString(potion.y), 1150, 275);
+		if(potion.itemCollided) {
+			g.drawString("itemsCollided: " + Boolean.toString(potion.itemCollided), 1150, 300);
+		}
+		else {
+			g.drawString("itemsCollided: " + Boolean.toString(potion.itemCollided), 1150, 300);
+		}
 	}
 
 	public void mousePressed(MouseEvent event) {//Player jumps
@@ -97,6 +117,35 @@ public class InfinityTest {
 		}
 		//Displays the about the key being pressed.
 //		System.out.println(event);
+	}
+
+	public void checkPotionCollision() {
+		potion.collidingTop = false;
+		potion.collidingBot = false;
+		for(int i = 0; i < platforms.size(); i++) {
+			for(int j = 0; j < platforms.get(i).plat.size(); j++) {
+				int platformX = platforms.get(i).plat.get(j).x;
+				int platformY = platforms.get(i).plat.get(j).y;
+				int platformW = platforms.get(i).plat.get(j).width;
+				int platformH = platforms.get(i).plat.get(j).height;
+				if(potion.y <= platformY + platformH
+					&& potion.y + potion.size >= platformY
+					&& potion.x <= platformX + platformW
+					&& potion.x + potion.size >= platformX) {
+					if(potion.x <= platformX + platformW - 2
+						&& potion.x + potion.size - 2 >= platformX
+						&& potion.y + potion.size < platformY + platformH) {
+						potion.y = platformY - potion.size;
+						potion.collidingBot = true;
+						potion.falling = false;
+						potion.fallSpd = 0;
+					}
+				}
+				if(!potion.collidingBot) {
+					potion.falling = true;
+				}
+			}
+		}
 	}
 
 	/**

@@ -14,31 +14,54 @@ public class PowerUps {
 	public int y;
 	public final int size = 32;//original size
 
-	public double lowerLimit = 50;
-	public double upperLimit = 1150;
-	public double spawnLocation;
+	public double maxJumpSpd = 0;
+	public double jumpOriginalVal = 10;
+	public double jumpSpd = jumpOriginalVal;
+	public double jumpAcceler = 0.2;
+	public double fallSpd = 0;
+	public double fallAcceler = 0.15;
+	public boolean jumping;
+	public boolean falling;
 
-	public BufferedImage playerImage;
+	public boolean collidingTop;
+	public boolean collidingBot;
+	public boolean collidingLeft;
+	public boolean collidingRight;
+	public boolean itemCollided;
+
+	public double lowerLimit = 500;
+	public double upperLimit = 1030;
+	public double itemLocation = (Math.random() * (upperLimit - lowerLimit)) + lowerLimit;
+	public BufferedImage itemImage;
 
 	public PowerUps() {
-		spawnLocation = (Math.random() * (upperLimit - lowerLimit)) + lowerLimit;
 	}
 
 	public void draw(Graphics2D g2) {
 		try {
-			playerImage = ImageIO.read(getClass().getResourceAsStream("assets/potion.png"));
+			itemImage = ImageIO.read(getClass().getResourceAsStream("assets/potion.png"));
 		}
 		catch(IOException e) {
 			e.printStackTrace();
 		}
-		g2.drawImage(playerImage, (int) spawnLocation, y, size, size, null);//draw the image
+		if(!itemCollided) {
+			g2.drawImage(itemImage, x, y, size, size, null);//draw the image
+		}
 	}
 
 	public void resetLocation() {
-		spawnLocation = (Math.random() * (upperLimit - lowerLimit)) + lowerLimit;
 	}
 
 	public void update() {
-
+		if(!itemCollided) {
+			x = (int) itemLocation;
+			if(collidingBot) {
+				itemLocation -= 2;
+			}
+			else {
+				y += fallSpd;
+				fallSpd += fallAcceler;
+			}
+		}
 	}
 }
