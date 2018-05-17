@@ -133,7 +133,7 @@ public class InfinityTest {
 	 * Checks the items collisions.
 	 */
 	public void checkPotionCollision() {
-		if((player.x - (player.size / 2)
+		if((player.x - (player.size / 2)//Todo - Improve Logic
 			== potion.x || player.x + (player.size / 2)
 			== potion.x) && player.y == potion.y) {
 			potion.itemCollided = true;
