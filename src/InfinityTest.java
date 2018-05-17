@@ -15,6 +15,7 @@ public class InfinityTest {
 	public boolean debug;
 
 	public void onCreate() {
+		scoreboard.createFile();
 		scoreboard.readScoreFile();
 		for(int i = 0; i < 50; i++) {
 			platforms.add(new PlatformGenerator(i * 250, 400));
@@ -33,19 +34,13 @@ public class InfinityTest {
 			}
 		}
 	}
-	
-	public void isPlayerDead()
-	{
-		
+
+	public void isPlayerDead() {
+
 	}
 
 	public void draw(Graphics2D g) {
 		player.draw(g);
-		do {
-			g.drawString("High Score: " + Integer.toString(scoreboard.highScore), 1150, 25);
-			g.drawString("Current Score: " + Integer.toString(scoreboard.score), 1150, 50);
-		}
-		while(scoreboard.systemScore());
 		if(debug) {
 			isDebugEnabled(g);
 		}
@@ -66,12 +61,8 @@ public class InfinityTest {
 		g.drawString("MouseY: " + Integer.toString(mouseCoordY), 1150, 125);
 		g.drawString("X: " + Integer.toString(player.x), 1150, 150);
 		g.drawString("Y: " + Integer.toString(player.y), 1150, 175);
-		if(player.x > 720) {
-			g.drawString("isDead: true", 1150, 175);
-		}
-		else {
-			g.drawString("isDead: false", 1150, 175);
-		}
+		g.drawString("High Score: " + Integer.toString(scoreboard.highScore), 1150, 25);
+		g.drawString("Current Score: " + Integer.toString(scoreboard.score), 1150, 50);
 	}
 
 	public void mousePressed(MouseEvent event) {//Player jumps

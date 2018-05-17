@@ -1,9 +1,9 @@
 
-import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileReader;
 import java.io.FileWriter;
+import java.io.PrintWriter;
+import java.util.Scanner;
 
 public class ScoreSystem {
 
@@ -24,15 +24,29 @@ public class ScoreSystem {
 		return false;
 	}
 
+	public void createFile() {
+		try {
+			File tmpDir = new File("score.txt");
+			boolean exists = tmpDir.exists();
+			if(!exists) {
+				PrintWriter writer = new PrintWriter("score.txt", "UTF-8");
+			}
+		}
+		catch(Exception e) {
+			System.out.println(e);
+		}
+	}
+
 	/**
 	 * Reads the file scoreboard and sets the high score.
 	 */
 	public void readScoreFile() {
 		try {
-			BufferedReader br = new BufferedReader(new FileReader(new File("scoreboard.txt")));
-			String st;
-			if((st = br.readLine()) != null) {
-				highScore = Integer.parseInt(st);
+			Scanner scnr = new Scanner(new File("score.txt"));
+			if(scnr.hasNextLine()) {
+				String lineScanned = scnr.nextLine();
+				Scanner lineScnr = new Scanner(lineScanned);
+				highScore = lineScnr.nextInt();
 			}
 		}
 		catch(Exception e) {
@@ -45,13 +59,13 @@ public class ScoreSystem {
 	 */
 	public void writeHighScore() {
 		try {
-			BufferedWriter br = new BufferedWriter(new FileWriter("scoreboard.txt"));
+			BufferedWriter br = new BufferedWriter(new FileWriter("score.txt"));
 			String scr = Integer.toString(highScore);
 			br.write(scr);
 			br.close();
 		}
 		catch(Exception e) {
-			e.printStackTrace();
+			System.out.println(e);
 		}
 	}
 }
