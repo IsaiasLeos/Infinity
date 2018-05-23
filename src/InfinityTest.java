@@ -6,7 +6,7 @@ import java.util.LinkedList;
 
 public class InfinityTest {
 
-	public LinkedList<PlatformGenerator> platforms = new LinkedList<>();
+	public LinkedList<Platform> platforms = new LinkedList<Platform>();
 	public Player player = new Player(50, 50, 50, 50);//Spawn Location
 	public ScoreSystem scoreboard = new ScoreSystem();
 	public Potion potion = new Potion();
@@ -15,39 +15,43 @@ public class InfinityTest {
 	public int mouseCoordY;
 	public boolean debug;
 	public int rectCoord;
+	public static int platformSpeed = 2;
+	public int fixedSeparation = platformSpeed * 50;
+	public PlatformGenerator pg = new PlatformGenerator();
 
 	/**
 	 * Commands that are to be called before anything is drawn or updated.
 	 */
 	public void onCreate() {
+		//Create an initial Platform to avoid null pointers
+		platforms.add(pg.generatePlatform(0));
+		while(platforms.peekLast().x + platforms.peekLast().width + fixedSeparation < GraphicalEngine.WIDTH){
+			platforms.add(pg.generatePlatform(platforms.peekLast().x + platforms.peekLast().width + fixedSeparation));
+		}
 		scoreboard.createFile();
 		scoreboard.readScoreFile();
-		for(int i = 0; i < 50; i++) {
-			platforms.add(new PlatformGenerator(i * 250, 400));
-		}
 	}
 
 	public void update() {
+		managePlatforms();
 		checkCollisions();
 		checkPotionCollision();
-		scoreboard.systemScore();
+		//scoreboard.systemScore();
 		player.update();
 		potion.update();
 
 		//Checks whether the anything is colliding with the ride side of the platform.
 		//Stops movement of platforms if anything is colliding.
 		for(int i = 0; i < platforms.size(); i++) {
-			for(int j = 0; j < platforms.get(i).plat.size(); j++) {
-				if(!player.collidingRight) {
-					platforms.get(i).plat.get(j).x -= 2;
-					potion.movement = 2;
-					if(debug) {
-						rectCoord = platforms.get(i).plat.get(j).x;
-					}
+			if(!player.collidingRight) {
+				platforms.get(i).x -= platformSpeed;
+				potion.movement = 2;
+				if(debug) {
+					rectCoord = platforms.get(i).x;
 				}
-				else {
-					potion.movement = 0;
-				}
+			}
+			else {
+				potion.movement = 0;
 			}
 		}
 	}
@@ -59,9 +63,16 @@ public class InfinityTest {
 		player.draw(g);
 		potion.draw(g);
 		for(int i = 0; i < platforms.size(); i++) {
-			for(int j = 0; j < platforms.get(i).plat.size(); j++) {
-				platforms.get(i).plat.get(j).draw(g);
-			}
+			platforms.get(i).draw(g);
+		}
+	}
+
+	public void managePlatforms(){
+		if(platforms.peekFirst().x + platforms.peekFirst().width < 0){
+			platforms.pollFirst();
+		}
+		if(platforms.peekLast().x + platforms.peekLast().width + fixedSeparation < GraphicalEngine.WIDTH){
+			platforms.add(pg.generatePlatform(platforms.peekLast().x + platforms.peekLast().width + fixedSeparation));
 		}
 	}
 
@@ -131,6 +142,7 @@ public class InfinityTest {
 
 	/**
 	 * Checks the items collisions.
+	 * TODO: Fix indentation
 	 */
 	public void checkPotionCollision() {
 		if((player.x - (player.size / 2)//Todo - Improve Logic
@@ -141,11 +153,10 @@ public class InfinityTest {
 		potion.collidingTop = false;
 		potion.collidingBot = false;
 		for(int i = 0; i < platforms.size(); i++) {
-			for(int j = 0; j < platforms.get(i).plat.size(); j++) {
-				int platformX = platforms.get(i).plat.get(j).x;
-				int platformY = platforms.get(i).plat.get(j).y;
-				int platformW = platforms.get(i).plat.get(j).width;
-				int platformH = platforms.get(i).plat.get(j).height;
+				int platformX = platforms.get(i).x;
+				int platformY = platforms.get(i).y;
+				int platformW = platforms.get(i).width;
+				int platformH = platforms.get(i).height;
 				if(potion.y <= platformY + platformH
 					&& potion.y + potion.size >= platformY
 					&& potion.x <= platformX + platformW
@@ -176,12 +187,12 @@ public class InfinityTest {
 				if(!potion.collidingBot) {
 					potion.falling = true;
 				}
-			}
 		}
 	}
 
 	/**
 	 * Checks the player's collisions.
+	 * TODO: Fix indentation
 	 */
 	public void checkCollisions() {
 		player.collidingTop = false;
@@ -189,11 +200,10 @@ public class InfinityTest {
 		player.collidingRight = false;
 		player.collidingLeft = false;
 		for(int i = 0; i < platforms.size(); i++) {
-			for(int j = 0; j < platforms.get(i).plat.size(); j++) {
-				int platformX = platforms.get(i).plat.get(j).x;
-				int platformY = platforms.get(i).plat.get(j).y;
-				int platformW = platforms.get(i).plat.get(j).width;
-				int platformH = platforms.get(i).plat.get(j).height;
+				int platformX = platforms.get(i).x;
+				int platformY = platforms.get(i).y;
+				int platformW = platforms.get(i).width;
+				int platformH = platforms.get(i).height;
 				if(player.y <= platformY + platformH
 					&& player.y + player.size >= platformY
 					&& player.x <= platformX + platformW
@@ -224,7 +234,6 @@ public class InfinityTest {
 				if(!player.collidingBot) {
 					player.falling = true;
 				}
-			}
 		}
 	}
 }
