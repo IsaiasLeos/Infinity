@@ -11,20 +11,6 @@ public class ScoreSystem {
 	public int highScore;
 
 	/**
-	 * Updates the score of the game.
-	 * @return returns whether there is a new higher score.
-	 */
-	public boolean systemScore() {
-		score++;
-		if(score > highScore) {
-			highScore = score;
-			writeHighScore();
-			return true;
-		}
-		return false;
-	}
-
-	/**
 	 * Checks if score file exists, if it doesn't exist create it.
 	 */
 	public void createFile() {
@@ -62,6 +48,7 @@ public class ScoreSystem {
 	 */
 	public void writeHighScore() {
 		try {
+			highScore = score;
 			BufferedWriter br = new BufferedWriter(new FileWriter("score.txt"));
 			String scr = Integer.toString(highScore);
 			br.write(scr);
