@@ -16,7 +16,7 @@ public class InfinityTest {
 	public boolean debug;
 	public int rectCoord;
 	
-	public static int platformSpeed = 4;
+	public static int platformSpeed = 5;
 	public int fixedSeparation = platformSpeed * 50;
 	public PlatformGenerator pg = new PlatformGenerator();
 
