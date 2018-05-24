@@ -11,13 +11,13 @@ public class PlatformGenerator {
 		int platformNum = rng.nextInt(5);
 		switch(platformNum) {
 			case 0:
-				return new Platform(x, 495, 867, 225);
+				return new Platform(1, x, 495, 867, 225);
 			case 1:
-				return new Platform(x, 420, 549, 300);
+				return new Platform(2, x, 420, 549, 300);
 			case 2:
-				return new Platform(x, 495, 867, 225);
+				return new Platform(3, x, 495, 867, 225);
 			default:
-				return new Platform(x, 537, 390, 183);
+				return new Platform(4, x, 537, 390, 183);
 		}
 	}
 }

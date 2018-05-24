@@ -48,11 +48,13 @@ public class InfinityTest {
 		}
 		//Checks whether the anything is colliding with the right side of the platform.
 		//Stops movement of platforms if anything is colliding.
-		for(int i = 0; i < platforms.size(); i++) {
-			if(!player.collidingRight) {
-				platforms.get(i).x -= platformSpeed;
-				if(debug) {
-					rectCoord = platforms.get(i).x;
+		if(!player.isPlayerDead()){
+			for(int i = 0; i < platforms.size(); i++) {
+				if(!player.collidingRight) {
+					platforms.get(i).x -= platformSpeed;
+					if(debug) {
+						rectCoord = platforms.get(i).x;
+					}
 				}
 			}
 		}

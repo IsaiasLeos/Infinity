@@ -98,34 +98,34 @@ public class Player {
 	}
 
 	public Point2D getTopLeft(){
-		return new Point2D.Double(x + 4, y - 2);
+		return new Point2D.Double(x + 3, y - 2);
 	}
 
 	public Point2D getTopRight(){
-		return new Point2D.Double(x + size - 4, y - 2);
+		return new Point2D.Double(x + size - 3, y - 2);
 	}
 
 	public Point2D getBotLeft(){
-		return new Point2D.Double(x + 4, y + size + 2);
+		return new Point2D.Double(x + 3, y + size + 2);
 	}
 
 	public Point2D getBotRight(){
-		return new Point2D.Double(x + size - 4, y + size + 2);
+		return new Point2D.Double(x + size - 3, y + size + 2);
 	}
 
 	public Point2D getLeftTop(){
-		return new Point2D.Double(x - 2, y + 4);
+		return new Point2D.Double(x - 2, y + 3);
 	}
 
 	public Point2D getLeftBot(){
-		return new Point2D.Double(x - 2, y + size - 4);
+		return new Point2D.Double(x - 2, y + size - 3);
 	}
 
 	public Point2D getRightTop(){
-		return new Point2D.Double(x + size + 2, y + 4);
+		return new Point2D.Double(x + size + 2, y + 3);
 	}
 
 	public Point2D getRightBot(){
-		return new Point2D.Double(x + size + 2, y + size - 4);
+		return new Point2D.Double(x + size + 2, y + size - 3);
 	}
 }
