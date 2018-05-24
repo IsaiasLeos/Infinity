@@ -7,7 +7,7 @@ import java.util.LinkedList;
 public class InfinityTest {
 
 	public LinkedList<Platform> platforms = new LinkedList<Platform>();
-	public Player player = new Player(50, 50, 50, 50);//Spawn Location
+	public Player player = new Player(50, 50, 50);//Spawn Location
 	public ScoreSystem scoreboard = new ScoreSystem();
 //	public Potion potion = new Potion();
 	public char keyCode;
