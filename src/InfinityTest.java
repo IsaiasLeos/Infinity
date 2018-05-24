@@ -4,11 +4,12 @@ import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.util.LinkedList;
 import java.awt.image.BufferedImage;
+import java.awt.Color;
 
 public class InfinityTest {
 
 	public LinkedList<Platform> platforms = new LinkedList<Platform>();
-	public Player player = new Player(50, 50, 50);//Spawn Location
+	public Player player = new Player(640, 180, 48);//Spawn Location
 	public ScoreSystem scoreboard = new ScoreSystem();
 //	public Potion potion = new Potion();
 	public char keyCode;
@@ -88,6 +89,7 @@ public class InfinityTest {
 	 * @param g
 	 */
 	public void isDebugEnabled(Graphics2D g) {
+		g.setColor(Color.WHITE);
 		g.drawString("High Score: " + Integer.toString(scoreboard.highScore), 1150, 25);
 		g.drawString("Current Score: " + Integer.toString(scoreboard.score), 1150, 50);
 		g.drawString("Key Pressed: " + Character.toString(keyCode), 1150, 75);

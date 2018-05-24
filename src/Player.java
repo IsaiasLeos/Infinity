@@ -28,7 +28,9 @@ public class Player {
 	public boolean collidingLeft;
 	public boolean collidingRight;
 
-	public BufferedImage playerImage;
+	public BufferedImage playerIddle;
+	public BufferedImage playerRun;
+	public BufferedImage[] playerRun;
 
 	/**
 	 * Creates the player at the given position.
@@ -40,6 +42,12 @@ public class Player {
 		this.x = x;
 		this.y = y;
 		this.size = size;
+
+		playerRun[0] = ImageLoader.loadImage("/assets/player1.png");
+		playerRun[1] = ImageLoader.loadImage("/assets/player2.png");
+		playerRun[2] = ImageLoader.loadImage("/assets/player3.png");
+		playerRun[3] = ImageLoader.loadImage("/assets/player4.png");
+		playerRun[4] = ImageLoader.loadImage("/assets/player5.png");
 	}
 
 	/**
