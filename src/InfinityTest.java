@@ -3,6 +3,7 @@ import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.util.LinkedList;
+import java.awt.image.BufferedImage;
 
 public class InfinityTest {
 
@@ -19,12 +20,14 @@ public class InfinityTest {
 	public static int platformSpeed = 5;
 	public int fixedSeparation = platformSpeed * 50;
 	public PlatformGenerator pg = new PlatformGenerator();
+	public BufferedImage backGround;
 
 	/**
 	 * Commands that are to be called before anything is drawn or updated.
 	 */
 	public void onCreate() {
 		//Create an initial Platform to avoid null pointers
+		backGround = ImageLoader.loadImage("/assets/background.png");
 		platforms.add(pg.generatePlatform(0));
 		while(platforms.peekLast().x + platforms.peekLast().width + fixedSeparation < GraphicalEngine.WIDTH) {
 			platforms.add(pg.generatePlatform(platforms.peekLast().x + platforms.peekLast().width + fixedSeparation));
@@ -61,6 +64,7 @@ public class InfinityTest {
 	}
 
 	public void draw(Graphics2D g) {
+		g.drawImage(backGround, 0, 0, null);
 		if(debug) {
 			isDebugEnabled(g);
 		}
