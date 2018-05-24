@@ -12,9 +12,7 @@ public class Player {
 
 	public int x;//coordinates of player
 	public int y;
-	public int jumpSpeed;
-	public final int size = 50;//original size
-	public int newSize = size;
+	public int size;
 
 	public double maxJumpSpd = 0;
 	public double jumpOriginalVal = 10;
@@ -36,14 +34,12 @@ public class Player {
 	 * Creates the player at the given position.
 	 * @param x
 	 * @param y
-	 * @param jumpSpeed
-	 * @param newSize
+	 * @param size
 	 */
-	public Player(int x, int y, int jumpSpeed, int newSize) {
+	public Player(int x, int y, int size) {
 		this.x = x;
 		this.y = y;
-		this.jumpSpeed = jumpSpeed;
-		this.newSize = newSize;
+		this.size = size;
 	}
 
 	/**
@@ -77,7 +73,7 @@ public class Player {
 	 * @return 
 	 */
 	public boolean isPlayerDead() {
-		return y > 720 || x < 0;
+		return y > 720;
 	}
 
 	/**

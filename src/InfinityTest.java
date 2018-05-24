@@ -15,6 +15,7 @@ public class InfinityTest {
 	public int mouseCoordY;
 	public boolean debug;
 	public int rectCoord;
+	
 	public static int platformSpeed = 4;
 	public int fixedSeparation = platformSpeed * 50;
 	public PlatformGenerator pg = new PlatformGenerator();
@@ -33,16 +34,19 @@ public class InfinityTest {
 	}
 
 	public void update() {
-		managePlatforms();
-		checkCollisions();
 		if(!player.isPlayerDead()) {
+			managePlatforms();
+			checkCollisions();
 			scoreboard.score++;
 			player.update();
 		}
-		else if(scoreboard.score > scoreboard.highScore) {
-			scoreboard.writeHighScore();
+		//If the player is dead, update score
+		else{ 
+			if(scoreboard.score > scoreboard.highScore) {
+				scoreboard.writeHighScore();
+			}
 		}
-		//Checks whether the anything is colliding with the ride side of the platform.
+		//Checks whether the anything is colliding with the right side of the platform.
 		//Stops movement of platforms if anything is colliding.
 		for(int i = 0; i < platforms.size(); i++) {
 			if(!player.collidingRight) {
