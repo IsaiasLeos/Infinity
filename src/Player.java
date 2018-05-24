@@ -29,8 +29,10 @@ public class Player {
 	public boolean collidingRight;
 
 	public BufferedImage playerIddle;
-	public BufferedImage playerRun;
-	public BufferedImage[] playerRun;
+	public BufferedImage playerJump;
+	public BufferedImage[] playerRun = new BufferedImage[5];
+
+	private AnimationManager runAnimation;
 
 	/**
 	 * Creates the player at the given position.
@@ -42,12 +44,15 @@ public class Player {
 		this.x = x;
 		this.y = y;
 		this.size = size;
-
+		playerJump = ImageLoader.loadImage("/assets/playerjumping.png");
+		playerIddle = ImageLoader.loadImage("/assets/playeriddle.png");
 		playerRun[0] = ImageLoader.loadImage("/assets/player1.png");
 		playerRun[1] = ImageLoader.loadImage("/assets/player2.png");
 		playerRun[2] = ImageLoader.loadImage("/assets/player3.png");
 		playerRun[3] = ImageLoader.loadImage("/assets/player4.png");
 		playerRun[4] = ImageLoader.loadImage("/assets/player5.png");
+
+		runAnimation = new AnimationManager(100, playerRun);
 	}
 
 	/**
@@ -55,15 +60,17 @@ public class Player {
 	 * @param g2
 	 */
 	public void draw(Graphics2D g2) {
-//		try {//sets the player image
-//			playerImage = ImageIO.read(getClass().getResourceAsStream("assets/green.png"));
-//		}
-//		catch(IOException e) {
-//			e.printStackTrace();
-//		}
-//		g2.drawImage(playerImage, x, y, size, size, null);//draw the image
-		Rectangle2D rect = new Rectangle2D.Double(x, y, size, size);
-		g2.fill(rect);
+		if(jumping || falling){
+			g2.drawImage(playerJump, x, y, null);
+		}
+		else if(collidingRight){
+			g2.drawImage(playerIddle, x, y, null);
+		}
+		else{
+			g2.drawImage(runAnimation.getFrame(), x, y, null);
+		}
+		//Rectangle2D rect = new Rectangle2D.Double(x, y, size, size);
+		//g2.fill(rect);
 	}
 
 	/**
@@ -88,6 +95,7 @@ public class Player {
 	 * Updates the falling and jumping coordinates.
 	 */
 	public void update() {
+		runAnimation.update();
 		if(jumping && !collidingTop) {
 			if(jumpSpd > maxJumpSpd) {
 				y -= jumpSpd;
