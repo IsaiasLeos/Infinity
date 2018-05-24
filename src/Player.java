@@ -28,6 +28,7 @@ public class Player {
 	public boolean collidingLeft;
 	public boolean collidingRight;
 
+	public BufferedImage playerLight;
 	public BufferedImage playerIddle;
 	public BufferedImage playerJump;
 	public BufferedImage[] playerRun = new BufferedImage[5];
@@ -44,6 +45,7 @@ public class Player {
 		this.x = x;
 		this.y = y;
 		this.size = size;
+		playerLight = ImageLoader.loadImage("/assets/playerhighlight.png");
 		playerJump = ImageLoader.loadImage("/assets/playerjumping.png");
 		playerIddle = ImageLoader.loadImage("/assets/playeriddle.png");
 		playerRun[0] = ImageLoader.loadImage("/assets/player1.png");
@@ -60,6 +62,7 @@ public class Player {
 	 * @param g2
 	 */
 	public void draw(Graphics2D g2) {
+		g2.drawImage(playerLight, x - 10, y - 10, null);
 		if(jumping || falling){
 			g2.drawImage(playerJump, x, y, null);
 		}
