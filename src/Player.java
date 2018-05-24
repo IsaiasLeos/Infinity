@@ -1,6 +1,7 @@
 
 import java.awt.Graphics2D;
 import java.awt.geom.Rectangle2D;
+import java.awt.geom.Point2D;
 import java.awt.image.BufferedImage;
 
 /**
@@ -12,7 +13,7 @@ public class Player {
 	public int x;//coordinates of player
 	public int y;
 	public int jumpSpeed;
-	public final int size = 32;//original size
+	public final int size = 50;//original size
 	public int newSize = size;
 
 	public double maxJumpSpd = 0;
@@ -98,5 +99,37 @@ public class Player {
 			y += fallSpd;
 			fallSpd += fallAcceler;
 		}
+	}
+
+	public Point2D getTopLeft(){
+		return new Point2D.Double(x + 4, y - 2);
+	}
+
+	public Point2D getTopRight(){
+		return new Point2D.Double(x + size - 4, y - 2);
+	}
+
+	public Point2D getBotLeft(){
+		return new Point2D.Double(x + 4, y + size + 2);
+	}
+
+	public Point2D getBotRight(){
+		return new Point2D.Double(x + size - 4, y + size + 2);
+	}
+
+	public Point2D getLeftTop(){
+		return new Point2D.Double(x - 2, y + 4);
+	}
+
+	public Point2D getLeftBot(){
+		return new Point2D.Double(x - 2, y + size - 4);
+	}
+
+	public Point2D getRightTop(){
+		return new Point2D.Double(x + size + 2, y + 4);
+	}
+
+	public Point2D getRightBot(){
+		return new Point2D.Double(x + size + 2, y + size - 4);
 	}
 }

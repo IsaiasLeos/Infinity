@@ -15,7 +15,7 @@ public class InfinityTest {
 	public int mouseCoordY;
 	public boolean debug;
 	public int rectCoord;
-	public static int platformSpeed = 2;
+	public static int platformSpeed = 4;
 	public int fixedSeparation = platformSpeed * 50;
 	public PlatformGenerator pg = new PlatformGenerator();
 
@@ -132,46 +132,34 @@ public class InfinityTest {
 	/**
 	 * Checks the player's collisions. TODO: Fix indentation
 	 */
-	public void checkCollisions() {
+	public void checkCollisions(){
 		player.collidingTop = false;
 		player.collidingBot = false;
-		player.collidingRight = false;
 		player.collidingLeft = false;
-		for(int i = 0; i < platforms.size(); i++) {
-			int platformX = platforms.get(i).x;
-			int platformY = platforms.get(i).y;
-			int platformW = platforms.get(i).width;
-			int platformH = platforms.get(i).height;
-			if(player.y <= platformY + platformH
-				&& player.y + player.size >= platformY
-				&& player.x <= platformX + platformW
-				&& player.x + player.size >= platformX) {
-				if(player.x <= platformX + platformW - 2
-					&& player.x + player.size - 2 >= platformX
-					&& player.y > platformY) {
-					player.collidingTop = false;
-					player.jumping = false;
-					player.falling = true;
-					player.jumpSpd = player.jumpOriginalVal;
-				}
-				if(player.x <= platformX + platformW - 2
-					&& player.x + player.size - 2 >= platformX
-					&& player.y + player.size < platformY + platformH) {
-					player.y = platformY - player.size;
-					player.collidingBot = true;
-					player.falling = false;
-					player.fallSpd = 0;
-				}
-				if(player.x + player.size == platformX && player.y + player.size != platformY) {
-					player.collidingRight = true;
-				}
-				if(player.x == platformX + platformW) {
-					player.collidingLeft = true;
-				}
-			}
-			if(!player.collidingBot) {
+		player.collidingRight = false;
+		for(int i = 0; i < platforms.size(); i++){
+			Platform platform = platforms.get(i);
+			if(platform.getBounds().contains(player.getTopLeft()) || platform.getBounds().contains(player.getTopRight())){
+				player.collidingTop = true;
+				player.jumping = false;
 				player.falling = true;
+				player.jumpSpd = player.jumpOriginalVal;
 			}
+			if(platform.getBounds().contains(player.getBotLeft()) || platform.getBounds().contains(player.getBotRight())){
+				player.collidingBot = true;
+				player.y = platform.y - player.size;
+				player.falling = false;
+				player.fallSpd = 0;
+			}
+			if(platform.getBounds().contains(player.getLeftTop()) || platform.getBounds().contains(player.getLeftBot())){
+				player.collidingLeft = true;
+			}
+			if(platform.getBounds().contains(player.getRightTop()) || platform.getBounds().contains(player.getRightBot())){
+				player.collidingRight = true;
+			}
+		}
+		if(!player.collidingBot){
+			player.falling = true;
 		}
 	}
 }

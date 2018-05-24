@@ -17,7 +17,10 @@ public class Platform {
 	}
 
 	public void draw(Graphics2D g) {
-		Rectangle2D box = new Rectangle2D.Double(x, y, width, height);
-		g.fill(box);
+		g.fill(new Rectangle2D.Double(x, y, width, height));
+	}
+
+	public Rectangle2D getBounds(){
+		return new Rectangle2D.Double(x, y, width, height);
 	}
 }
