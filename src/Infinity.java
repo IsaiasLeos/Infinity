@@ -125,7 +125,7 @@ public class Infinity {
 
 		keyCode = letterPressed;//For Debug
 
-		if('r' == letterPressed || 'R' == letterPressed) {//Reset Spawn Location
+		if(('r' == letterPressed || 'R' == letterPressed) && debug) {//Reset Spawn Location
 			player.fallSpd = 0;
 			player.setLocation(640, 180);
 		}
