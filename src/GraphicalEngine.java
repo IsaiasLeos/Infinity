@@ -100,7 +100,8 @@ public class GraphicalEngine extends JPanel implements Runnable, MouseListener, 
 	public void keyReleased(KeyEvent event) {
 	}
 
-	public void keyPressed(KeyEvent e) {
+	public void keyPressed(KeyEvent event) {
+		game.keyPressed(event);
 	}
 
 	public static void main(String[] args) {
