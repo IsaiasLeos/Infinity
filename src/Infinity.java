@@ -17,7 +17,7 @@ public class Infinity {
 	public int mouseCoordY;
 	public boolean debug;
 	public int rectCoord;
-	
+
 	public static int platformSpeed = 5;
 	public int fixedSeparation = platformSpeed * 50;
 	public PlatformGenerator pg = new PlatformGenerator();
@@ -45,14 +45,14 @@ public class Infinity {
 			player.update();
 		}
 		//If the player is dead, update score
-		else{ 
+		else {
 			if(scoreboard.score > scoreboard.highScore) {
 				scoreboard.writeHighScore();
 			}
 		}
 		//Checks whether the anything is colliding with the right side of the platform.
 		//Stops movement of platforms if anything is colliding.
-		if(!player.isPlayerDead()){
+		if(!player.isPlayerDead()) {
 			for(int i = 0; i < platforms.size(); i++) {
 				if(!player.collidingRight) {
 					platforms.get(i).x -= platformSpeed;
@@ -144,33 +144,33 @@ public class Infinity {
 	/**
 	 * Checks the player's collisions. TODO: Fix indentation
 	 */
-	public void checkCollisions(){
+	public void checkCollisions() {
 		player.collidingTop = false;
 		player.collidingBot = false;
 		player.collidingLeft = false;
 		player.collidingRight = false;
-		for(int i = 0; i < platforms.size(); i++){
+		for(int i = 0; i < platforms.size(); i++) {
 			Platform platform = platforms.get(i);
-			if(platform.getBounds().contains(player.getTopLeft()) || platform.getBounds().contains(player.getTopRight())){
+			if(platform.getBounds().contains(player.getTopLeft()) || platform.getBounds().contains(player.getTopRight())) {
 				player.collidingTop = true;
 				player.jumping = false;
 				player.falling = true;
 				player.jumpSpd = player.jumpOriginalVal;
 			}
-			if(platform.getBounds().contains(player.getBotLeft()) || platform.getBounds().contains(player.getBotRight())){
+			if(platform.getBounds().contains(player.getBotLeft()) || platform.getBounds().contains(player.getBotRight())) {
 				player.collidingBot = true;
 				player.y = platform.y - player.size;
 				player.falling = false;
 				player.fallSpd = 0;
 			}
-			if(platform.getBounds().contains(player.getLeftTop()) || platform.getBounds().contains(player.getLeftBot())){
+			if(platform.getBounds().contains(player.getLeftTop()) || platform.getBounds().contains(player.getLeftBot())) {
 				player.collidingLeft = true;
 			}
-			if(platform.getBounds().contains(player.getRightTop()) || platform.getBounds().contains(player.getRightBot())){
+			if(platform.getBounds().contains(player.getRightTop()) || platform.getBounds().contains(player.getRightBot())) {
 				player.collidingRight = true;
 			}
 		}
-		if(!player.collidingBot){
+		if(!player.collidingBot) {
 			player.falling = true;
 		}
 	}

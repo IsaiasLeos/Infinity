@@ -1,12 +1,11 @@
 
-import java.util.LinkedList;
 import java.util.Random;
 
 public class PlatformGenerator {
 
 	public int x;
 
-	public Platform generatePlatform(int x){
+	public Platform generatePlatform(int x) {
 		Random rng = new Random();
 		int platformNum = rng.nextInt(5);
 		switch(platformNum) {

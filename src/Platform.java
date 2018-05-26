@@ -38,7 +38,7 @@ public class Platform {
 		g.drawImage(image, x, y, null);
 	}
 
-	public Rectangle2D getBounds(){
+	public Rectangle2D getBounds() {
 		return new Rectangle2D.Double(x, y, width, height);
 	}
 }

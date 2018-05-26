@@ -62,13 +62,13 @@ public class Player {
 	 */
 	public void draw(Graphics2D g2) {
 		g2.drawImage(playerLight, x - 10, y - 10, null);
-		if(jumping || falling){
+		if(jumping || falling) {
 			g2.drawImage(playerJump, x, y, null);
 		}
-		else if(collidingRight){
+		else if(collidingRight) {
 			g2.drawImage(playerIddle, x, y, null);
 		}
-		else{
+		else {
 			g2.drawImage(runAnimation.getFrame(), x, y, null);
 		}
 		//Rectangle2D rect = new Rectangle2D.Double(x, y, size, size);
@@ -87,7 +87,7 @@ public class Player {
 
 	/**
 	 * Checks whether the player is "dead" or "alive."
-	 * @return 
+	 * @return
 	 */
 	public boolean isPlayerDead() {
 		return y > 720;
@@ -115,35 +115,35 @@ public class Player {
 		}
 	}
 
-	public Point2D getTopLeft(){
+	public Point2D getTopLeft() {
 		return new Point2D.Double(x + 3, y - 2);
 	}
 
-	public Point2D getTopRight(){
+	public Point2D getTopRight() {
 		return new Point2D.Double(x + size - 3, y - 2);
 	}
 
-	public Point2D getBotLeft(){
+	public Point2D getBotLeft() {
 		return new Point2D.Double(x + 3, y + size + 2);
 	}
 
-	public Point2D getBotRight(){
+	public Point2D getBotRight() {
 		return new Point2D.Double(x + size - 3, y + size + 2);
 	}
 
-	public Point2D getLeftTop(){
+	public Point2D getLeftTop() {
 		return new Point2D.Double(x - 2, y + 3);
 	}
 
-	public Point2D getLeftBot(){
+	public Point2D getLeftBot() {
 		return new Point2D.Double(x - 2, y + size - 3);
 	}
 
-	public Point2D getRightTop(){
+	public Point2D getRightTop() {
 		return new Point2D.Double(x + size + 2, y + 3);
 	}
 
-	public Point2D getRightBot(){
+	public Point2D getRightBot() {
 		return new Point2D.Double(x + size + 2, y + size - 3);
 	}
 }
