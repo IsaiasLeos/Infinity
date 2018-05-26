@@ -17,7 +17,8 @@ public class Infinity {
 	public int mouseCoordY;
 	public boolean debug = true;
 	public int rectCoord;
-
+	public int[] speedIncrease = {1,2,3,4,5,6,7,8,9,10};
+	public int index;
 	public static int platformSpeed = 5;
 	public int fixedSeparation = platformSpeed * 50;
 	public PlatformGenerator pg = new PlatformGenerator();
@@ -27,6 +28,7 @@ public class Infinity {
 	 * Commands that are to be called before anything is drawn or updated.
 	 */
 	public void onCreate() {
+		
 		//Create an initial Platform to avoid null pointers
 		backGround = ImageLoader.loadImage("/background.png");
 		platforms.add(pg.generatePlatform(0));
@@ -53,7 +55,12 @@ public class Infinity {
 		else if(scoreboard.score > scoreboard.highScore) {
 			scoreboard.writeHighScore();
 		}
-
+		if(speedIncrease[index]*1000 < scoreboard.score)
+		{
+			index++;
+			platformSpeed++;
+		}
+		
 		//Checks whether the anything is colliding with the right side of the platform.
 		//Stops movement of platforms if anything is colliding.
 		if(!player.isPlayerDead()) {
