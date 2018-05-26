@@ -1,4 +1,5 @@
 import java.awt.image.BufferedImage;
+import java.io.IOException;
 import javax.imageio.ImageIO;
 
 public class ImageLoader{
@@ -7,7 +8,7 @@ public class ImageLoader{
 		try{
 			return ImageIO.read(ImageLoader.class.getResource(path));
 		}
-		catch(Exception e){
+		catch(IOException e){
 			e.printStackTrace();
 		}
 		return null;

@@ -1,6 +1,5 @@
 
 import java.awt.Graphics2D;
-import java.awt.geom.Rectangle2D;
 import java.awt.geom.Point2D;
 import java.awt.image.BufferedImage;
 
@@ -45,14 +44,14 @@ public class Player {
 		this.x = x;
 		this.y = y;
 		this.size = size;
-		playerLight = ImageLoader.loadImage("/assets/playerhighlight.png");
-		playerJump = ImageLoader.loadImage("/assets/playerjumping.png");
-		playerIddle = ImageLoader.loadImage("/assets/playeriddle.png");
-		playerRun[0] = ImageLoader.loadImage("/assets/player1.png");
-		playerRun[1] = ImageLoader.loadImage("/assets/player2.png");
-		playerRun[2] = ImageLoader.loadImage("/assets/player3.png");
-		playerRun[3] = ImageLoader.loadImage("/assets/player4.png");
-		playerRun[4] = ImageLoader.loadImage("/assets/player5.png");
+		playerLight = ImageLoader.loadImage("/playerhighlight.png");
+		playerJump = ImageLoader.loadImage("/playerjumping.png");
+		playerIddle = ImageLoader.loadImage("/playeriddle.png");
+		playerRun[0] = ImageLoader.loadImage("/player1.png");
+		playerRun[1] = ImageLoader.loadImage("/player2.png");
+		playerRun[2] = ImageLoader.loadImage("/player3.png");
+		playerRun[3] = ImageLoader.loadImage("/player4.png");
+		playerRun[4] = ImageLoader.loadImage("/player5.png");
 
 		runAnimation = new AnimationManager(100, playerRun);
 	}

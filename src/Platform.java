@@ -19,16 +19,16 @@ public class Platform {
 
 		switch(platNumber) {
 			case 1:
-				image = ImageLoader.loadImage("/assets/platform1.png");
+				image = ImageLoader.loadImage("/platform1.png");
 				break;
 			case 2:
-				image = ImageLoader.loadImage("/assets/platform2.png");
+				image = ImageLoader.loadImage("/platform2.png");
 				break;
 			case 3:
-				image = ImageLoader.loadImage("/assets/platform3.png");
+				image = ImageLoader.loadImage("/platform3.png");
 				break;
 			default:
-				image = ImageLoader.loadImage("/assets/platform4.png");
+				image = ImageLoader.loadImage("/platform4.png");
 				break;
 		}
 	}

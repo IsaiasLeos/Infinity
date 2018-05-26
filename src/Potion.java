@@ -1,8 +1,6 @@
 
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
-import java.io.IOException;
-import javax.imageio.ImageIO;
 
 /**
  *
@@ -41,15 +39,10 @@ public class Potion {
 
 	/**
 	 * Draws the potion item.
-	 * @param g2 
+	 * @param g2
 	 */
 	public void draw(Graphics2D g2) {
-		try {
-			itemImage = ImageIO.read(getClass().getResourceAsStream("assets/potion.png"));
-		}
-		catch(IOException e) {
-			e.printStackTrace();
-		}
+		itemImage = ImageLoader.loadImage("/potion.png");
 		if(!itemCollided) {
 			g2.drawImage(itemImage, x, y, size, size, null);//draw the image
 		}

@@ -6,7 +6,7 @@ import java.util.LinkedList;
 import java.awt.image.BufferedImage;
 import java.awt.Color;
 
-public class InfinityTest {
+public class Infinity {
 
 	public LinkedList<Platform> platforms = new LinkedList<Platform>();
 	public Player player = new Player(640, 180, 48);//Spawn Location
@@ -28,7 +28,7 @@ public class InfinityTest {
 	 */
 	public void onCreate() {
 		//Create an initial Platform to avoid null pointers
-		backGround = ImageLoader.loadImage("/assets/background.png");
+		backGround = ImageLoader.loadImage("/background.png");
 		platforms.add(pg.generatePlatform(0));
 		while(platforms.peekLast().x + platforms.peekLast().width + fixedSeparation < GraphicalEngine.WIDTH) {
 			platforms.add(pg.generatePlatform(platforms.peekLast().x + platforms.peekLast().width + fixedSeparation));

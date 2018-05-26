@@ -20,7 +20,7 @@ public class GraphicalEngine extends JPanel implements Runnable, MouseListener, 
 	private final int fps = 60;
 	private final long targetTime = 1000 / fps;
 
-	public InfinityTest game = new InfinityTest();
+	public Infinity game = new Infinity();
 
 	public GraphicalEngine() {
 		initComponents();
