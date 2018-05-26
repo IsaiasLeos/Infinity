@@ -38,9 +38,11 @@ public class Infinity {
 	}
 
 	public void update() {
+		//Update the jumping speed to its original state
 		if(!player.jumping && player.fallAcceler != 0.15) {
 			player.fallAcceler = 0.15;
 		}
+		//If the player is dead stop movement
 		if(!player.isPlayerDead()) {
 			managePlatforms();
 			checkCollisions();
@@ -48,11 +50,10 @@ public class Infinity {
 			player.update();
 		}
 		//If the player is dead, update score
-		else {
-			if(scoreboard.score > scoreboard.highScore) {
-				scoreboard.writeHighScore();
-			}
+		else if(scoreboard.score > scoreboard.highScore) {
+			scoreboard.writeHighScore();
 		}
+
 		//Checks whether the anything is colliding with the right side of the platform.
 		//Stops movement of platforms if anything is colliding.
 		if(!player.isPlayerDead()) {
@@ -92,21 +93,21 @@ public class Infinity {
 	 * @param g
 	 */
 	public void isDebugEnabled(Graphics2D g) {
-		int height = 15;
+		int debugSeperationHeight = 15;
 		g.setColor(Color.WHITE);
-		g.drawString("highScore: " + Integer.toString(scoreboard.highScore), 1150, height * 1);
-		g.drawString("currentScore: " + Integer.toString(scoreboard.score), 1150, height * 2);
-		g.drawString("keyCode: " + Character.toString(keyCode), 1150, height * 3);
-		g.drawString("mouseX: " + Integer.toString(mouseCoordX), 1150, height * 4);
-		g.drawString("mouseY: " + Integer.toString(mouseCoordY), 1150, height * 5);
-		g.drawString("playerX: " + Integer.toString(player.x), 1150, height * 6);
-		g.drawString("playerY: " + Integer.toString(player.y), 1150, height * 7);
-		g.drawString("isPlayerDead: " + Boolean.toString(player.isPlayerDead()), 1150, height * 8);
-		g.drawString("rectCoord: " + Integer.toString(rectCoord), 1150, height * 9);
-		g.drawString("fallAccelr: " + Double.toString(player.fallAcceler), 1150, height * 10);
-		g.drawString("fallSpd: " + Double.toString(player.fallSpd), 1150, height * 11);
-		g.drawString("jumpAccelr: " + Double.toString(player.jumpAcceler), 1150, height * 12);
-		g.drawString("jumpSped: " + Double.toString(player.jumpSpd), 1150, height * 13);
+		g.drawString("highScore: " + Integer.toString(scoreboard.highScore), 1150, debugSeperationHeight * 1);
+		g.drawString("currentScore: " + Integer.toString(scoreboard.score), 1150, debugSeperationHeight * 2);
+		g.drawString("keyCode: " + Character.toString(keyCode), 1150, debugSeperationHeight * 3);
+		g.drawString("mouseX: " + Integer.toString(mouseCoordX), 1150, debugSeperationHeight * 4);
+		g.drawString("mouseY: " + Integer.toString(mouseCoordY), 1150, debugSeperationHeight * 5);
+		g.drawString("playerX: " + Integer.toString(player.x), 1150, debugSeperationHeight * 6);
+		g.drawString("playerY: " + Integer.toString(player.y), 1150, debugSeperationHeight * 7);
+		g.drawString("isPlayerDead: " + Boolean.toString(player.isPlayerDead()), 1150, debugSeperationHeight * 8);
+		g.drawString("rectCoord: " + Integer.toString(rectCoord), 1150, debugSeperationHeight * 9);
+		g.drawString("fallAccelr: " + Double.toString(player.fallAcceler), 1150, debugSeperationHeight * 10);
+		g.drawString("fallSpd: " + Double.toString(player.fallSpd), 1150, debugSeperationHeight * 11);
+		g.drawString("jumpAccelr: " + Double.toString(player.jumpAcceler), 1150, debugSeperationHeight * 12);
+		g.drawString("jumpSped: " + Double.toString(player.jumpSpd), 1150, debugSeperationHeight * 13);
 	}
 
 	/**
@@ -120,6 +121,10 @@ public class Infinity {
 //		System.out.println(event);
 	}
 
+	/**
+	 * An event which indicates what key was pressed.
+	 * @param event
+	 */
 	void keyPressed(KeyEvent event) {
 		if(event.getKeyCode() == KeyEvent.VK_UP) {
 			if(!player.jumping && !player.falling) {
