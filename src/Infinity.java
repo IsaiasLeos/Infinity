@@ -12,7 +12,7 @@ public class Infinity {
 	public Player player = new Player(640, 180, 48);//Spawn Location
 	public ScoreSystem scoreboard = new ScoreSystem();
 //	public Potion potion = new Potion();
-	public char keyCode;
+	public int keyCode;
 	public int mouseCoordX;
 	public int mouseCoordY;
 	public boolean debug;
@@ -92,7 +92,7 @@ public class Infinity {
 		g.setColor(Color.WHITE);
 		g.drawString("High Score: " + Integer.toString(scoreboard.highScore), 1150, 25);
 		g.drawString("Current Score: " + Integer.toString(scoreboard.score), 1150, 50);
-		g.drawString("Key Pressed: " + Character.toString(keyCode), 1150, 75);
+		g.drawString("Key Pressed: " + Integer.toString(keyCode), 1150, 75);
 		g.drawString("MouseX: " + Integer.toString(mouseCoordX), 1150, 100);
 		g.drawString("MouseY: " + Integer.toString(mouseCoordY), 1150, 125);
 		g.drawString("X: " + Integer.toString(player.x), 1150, 150);
@@ -109,6 +109,7 @@ public class Infinity {
 		if(!player.jumping && !player.falling) {
 			player.jumping = true;
 		}
+		
 		mouseCoordX = event.getX();//For Debug
 		mouseCoordY = event.getY();
 
@@ -121,13 +122,13 @@ public class Infinity {
 	 * @param event
 	 */
 	public void keyTyped(KeyEvent event) {
-		char letterPressed = event.getKeyChar();
+		int letterPressed = event.getKeyCode();
 
 		keyCode = letterPressed;//For Debug
 
 		if(('r' == letterPressed || 'R' == letterPressed) && debug) {//Reset Spawn Location
 			player.fallSpd = 0;
-			player.setLocation(640, 180);
+			player.setLocation(320, 180);
 		}
 		if('0' == letterPressed) {//Enable or Disable Debug Info
 			if(debug) {
