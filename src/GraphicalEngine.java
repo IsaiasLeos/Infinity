@@ -1,110 +1,113 @@
-
+import java.awt.Canvas;
 import java.awt.Dimension;
-import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.image.BufferStrategy;
+import java.util.ArrayList;
+import javax.swing.JFrame;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
 
-public class GraphicalEngine extends JPanel implements Runnable, MouseListener, KeyListener {
+public class GraphicalEngine implements KeyListener, MouseListener{
 
-	private static final long serialVersionUID = 1L;
+    private Canvas gameCanvas = new Canvas();
+    public static final int WIDTH = 1280;
+    public static final int HEIGHT = 720;
 
-	public static final int WIDTH = 1280;
-	public static final int HEIGHT = 720;
-	private Thread thread;
-	private boolean running;
-	private final int fps = 60;
-	private final long targetTime = 1000 / fps;
+    public Infinity game = new Infinity();
 
-	public Infinity game = new Infinity();
+    public void start() {
+        Dimension gameSize = new Dimension(WIDTH, HEIGHT);
+        String gameName = "Platformer";
+        JFrame gameWindow = new JFrame(gameName);
+        gameWindow.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        gameWindow.setSize(gameSize);
+        gameWindow.setResizable(false);
+        gameWindow.setVisible(true);
+        gameCanvas.setSize(gameSize);
+        gameCanvas.setMaximumSize(gameSize);
+        gameCanvas.setMinimumSize(gameSize);
+        gameCanvas.setPreferredSize(gameSize);
+        gameWindow.add(gameCanvas);
+        gameWindow.setLocationRelativeTo(null);
+        gameCanvas.addKeyListener(this);
+        gameCanvas.addMouseListener(this);
 
-	public GraphicalEngine() {
-		initComponents();
-	}
+        final int FPS = 60;
+        final int SKIP_TICKS = 1000 / FPS;
+        final int MAX_FRAMESKIP = 5;
+        long nextGameTick = System.currentTimeMillis();
+        int loops;
+        long timeAtLastFPSCheck = 0;
+        int ticks = 0;
+        boolean running = true;
 
-	public void initComponents() {
-		JFrame window = new JFrame();
-		window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		window.setResizable(false);
-		this.setPreferredSize(new Dimension(WIDTH, HEIGHT));
-		this.addMouseListener(this);
-		this.addKeyListener(this);
-		this.setFocusable(true);
-		window.add(this);
-		window.pack();
-		window.setLocationRelativeTo(null);
-		window.setVisible(true);
-		start();
-	}
+        game.onCreate();
 
-	private void start() {
-		game.onCreate();
-		running = true;
-		thread = new Thread(this);
-		thread.start();
-	}
+        while(running) {
+            loops = 0;
+            while(System.currentTimeMillis() > nextGameTick && loops < MAX_FRAMESKIP) {
+                update();
+                ticks++;
+                nextGameTick += SKIP_TICKS;
+                loops++;
+            }
+            render();
+            if(System.currentTimeMillis() - timeAtLastFPSCheck >= 1000) {
+                gameWindow.setTitle(gameName + " -FPS: " + ticks);
+                ticks = 0;
+                timeAtLastFPSCheck = System.currentTimeMillis();
+            }
+        }
+        
+    }
+    
+    private void update() {
+    	game.update();
+    }
+    
+    private void render() {
+        BufferStrategy buffer = gameCanvas.getBufferStrategy();
+        if(buffer == null) {
+           gameCanvas.createBufferStrategy(2);
+            return;
+        }
+        Graphics2D graphicObj = (Graphics2D) buffer.getDrawGraphics();
+        graphicObj.clearRect(0, 0,gameCanvas.getWidth(),gameCanvas.getHeight());
+        game.draw(graphicObj);
+        graphicObj.dispose();
+        buffer.show();
+    }
 
-	public void run() {
-		while(running) {
-			Long start = System.nanoTime();
-			tick();
-			repaint();
-			Long elapsed = System.nanoTime() - start;
-			Long wait = targetTime - elapsed / 1000000;
-			if(wait <= 0) {
-				wait = (long) 5;
-			}
-			try {
-				Thread.sleep(wait);
-			}
-			catch(InterruptedException e) {
-				e.printStackTrace();
-			}
-		}
-	}
+    public void mousePressed(MouseEvent event) {
+        game.mousePressed(event);
+    }
 
-	public void tick() {
-		game.update();
-	}
+    public void mouseClicked(MouseEvent event) {
+    }
 
-	public void paintComponent(Graphics g) {
-		super.paintComponent(g);
-		Graphics2D g2 = (Graphics2D) g;
-		game.draw(g2);
-	}
+    public void mouseEntered(MouseEvent event) {
+    }
 
-	public void mousePressed(MouseEvent event) {
-		game.mousePressed(event);
-	}
+    public void mouseExited(MouseEvent event) {
+    }
 
-	public void mouseClicked(MouseEvent event) {
-	}
+    public void mouseReleased(MouseEvent event) {
+    }
 
-	public void mouseEntered(MouseEvent event) {
-	}
+    public void keyPressed(KeyEvent event){
+        game.keyPressed(event);
+    }
 
-	public void mouseExited(MouseEvent event) {
-	}
+	public void keyReleased(KeyEvent event){}
 
-	public void mouseReleased(MouseEvent event) {
-	}
+	public void keyTyped(KeyEvent event){
+        game.keyTyped(event);
+    }
 
-	public void keyTyped(KeyEvent event) {
-		game.keyTyped(event);
-	}
-
-	public void keyReleased(KeyEvent event) {
-	}
-
-	public void keyPressed(KeyEvent event) {
-		game.keyPressed(event);
-	}
-
-	public static void main(String[] args) {
+	public static void main(String[] args){
 		GraphicalEngine engine = new GraphicalEngine();
+		engine.start();
 	}
 }
