@@ -41,11 +41,20 @@ public class Infinity {
 		scoreboard.readScoreFile();
 	}
 
-	public void update() {
-		//Update the jumping speed to its original state
+	public void playerFallingReset() {
 		if(!player.jumping && player.fallAcceler != 0.15) {
 			player.fallAcceler = 0.15;
 		}
+	}
+	
+	public void speedIncrease()
+	{
+
+	}
+
+	public void update() {
+		//Update the jumping speed to its original state
+		playerFallingReset();
 		//If the player is dead stop movement
 		if(!player.isPlayerDead()) {
 			managePlatforms();
@@ -57,11 +66,6 @@ public class Infinity {
 		else if(scoreboard.score > scoreboard.highScore) {
 			scoreboard.writeHighScore();
 		}
-		if(speedIncrease[index] * 1000 < scoreboard.score) {
-			index++;
-			platformSpeed++;
-		}
-
 		//Checks whether the anything is colliding with the right side of the platform.
 		//Stops movement of platforms if anything is colliding.
 		if(!player.isPlayerDead()) {
