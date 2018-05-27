@@ -124,6 +124,9 @@ public class Infinity {
 	 * @param event
 	 */
 	public void mousePressed(MouseEvent event) {//Player jumps
+		if(!player.jumping && !player.falling) {
+			player.jumping = true;
+		}
 		mouseCoordX = event.getX();//For Debug
 		mouseCoordY = event.getY();
 		//Displays information of where the mouse was clicked.
