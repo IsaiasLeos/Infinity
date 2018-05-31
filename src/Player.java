@@ -22,6 +22,10 @@ public class Player {
 	public boolean jumping;
 	public boolean falling;
 
+	public boolean left;
+	public boolean right;
+	public double horizontalSpeed = 3.0;
+
 	public boolean collidingTop;//Collision Checks
 	public boolean collidingBot;
 	public boolean collidingLeft;
@@ -98,6 +102,12 @@ public class Player {
 	 */
 	public void update() {
 		runAnimation.update();
+		if(left){
+			x -= horizontalSpeed;
+		}
+		if(right){
+			x += horizontalSpeed;
+		}
 		if(jumping && !collidingTop) {
 			if(jumpSpd > maxJumpSpd) {
 				y -= jumpSpd;

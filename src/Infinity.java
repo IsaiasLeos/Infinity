@@ -141,7 +141,7 @@ public class Infinity {
 	 * An event which indicates what key was pressed.
 	 * @param event
 	 */
-	void keyPressed(KeyEvent event) {
+	public void keyPressed(KeyEvent event) {
 		keyCode = event.getKeyCode();//For Debug
 		if(event.getKeyCode() == KeyEvent.VK_UP) {
 			if(!player.jumping && !player.falling) {
@@ -155,12 +155,31 @@ public class Infinity {
 		}
 		if(event.getKeyCode() == KeyEvent.VK_LEFT) {
 			if(!(player.x < WIDTH - (WIDTH - 50))) {
-				player.x -= 3.0;
+				player.left = true;
 			}
 		}
 		if(event.getKeyCode() == KeyEvent.VK_RIGHT) {
 			if(!(player.x > WIDTH - 50)) {
-				player.x += 3.0;
+				player.right = true;
+			}
+		}
+	}
+
+	public void keyReleased(KeyEvent event) {
+		keyCode = event.getKeyCode();//For Debug
+		if(event.getKeyCode() == KeyEvent.VK_UP) {
+			if(!player.jumping && !player.falling) {
+				player.jumping = true;
+			}
+		}
+		if(event.getKeyCode() == KeyEvent.VK_LEFT) {
+			if(!(player.x < WIDTH - (WIDTH - 50))) {
+				player.left = false;
+			}
+		}
+		if(event.getKeyCode() == KeyEvent.VK_RIGHT) {
+			if(!(player.x > WIDTH - 50)) {
+				player.right = false;
 			}
 		}
 	}

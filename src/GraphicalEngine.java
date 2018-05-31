@@ -97,7 +97,9 @@ public class GraphicalEngine implements KeyListener, MouseListener{
         game.keyPressed(event);
     }
 
-    public void keyReleased(KeyEvent event){}
+    public void keyReleased(KeyEvent event){
+        game.keyReleased(event);
+    }
 
     public void keyTyped(KeyEvent event){
         game.keyTyped(event);
