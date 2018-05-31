@@ -1,9 +1,8 @@
+import javax.swing.JFrame;
 import java.awt.Canvas;
 import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.awt.image.BufferStrategy;
-import java.util.ArrayList;
-import javax.swing.JFrame;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
@@ -18,59 +17,57 @@ public class GraphicalEngine implements KeyListener, MouseListener{
     public Infinity game = new Infinity();
 
     public void start() {
-        Dimension gameSize = new Dimension(WIDTH, HEIGHT);
-        String gameName = "Platformer";
+        String gameName = "Infinity";
         JFrame gameWindow = new JFrame(gameName);
         gameWindow.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        gameWindow.setSize(gameSize);
         gameWindow.setResizable(false);
-        gameWindow.setVisible(true);
-        gameCanvas.setSize(gameSize);
-        gameCanvas.setMaximumSize(gameSize);
-        gameCanvas.setMinimumSize(gameSize);
-        gameCanvas.setPreferredSize(gameSize);
-        gameWindow.add(gameCanvas);
-        gameWindow.setLocationRelativeTo(null);
+        gameCanvas.setPreferredSize(new Dimension(WIDTH, HEIGHT));
         gameCanvas.addKeyListener(this);
         gameCanvas.addMouseListener(this);
+        gameCanvas.setFocusable(true);
+        gameCanvas.requestFocus();
+        gameWindow.add(gameCanvas);
+        gameWindow.pack();
+        gameWindow.setLocationRelativeTo(null);
 
-        final int FPS = 60;
-        final int SKIP_TICKS = 1000 / FPS;
-        final int MAX_FRAMESKIP = 5;
-        long nextGameTick = System.currentTimeMillis();
-        int loops;
-        long timeAtLastFPSCheck = 0;
-        int ticks = 0;
+        long lastTime = System.nanoTime();
+        double amountOfTicks = 60.0;
+        double ns = 1000000000 / amountOfTicks;
+        double delta = 0;
+        long timer = System.currentTimeMillis();
+        int frames = 0;
         boolean running = true;
-
+        
         game.onCreate();
-
-        while(running) {
-            loops = 0;
-            while(System.currentTimeMillis() > nextGameTick && loops < MAX_FRAMESKIP) {
+        gameWindow.setVisible(true);
+        
+        while(running){
+            long now = System.nanoTime();
+            delta += (now - lastTime) / ns;
+            lastTime = now;
+            while(delta >= 1) {
                 update();
-                ticks++;
-                nextGameTick += SKIP_TICKS;
-                loops++;
+                delta--;
             }
             render();
-            if(System.currentTimeMillis() - timeAtLastFPSCheck >= 1000) {
-                gameWindow.setTitle(gameName + " -FPS: " + ticks);
-                ticks = 0;
-                timeAtLastFPSCheck = System.currentTimeMillis();
+            frames++;
+
+            if(System.currentTimeMillis() - timer > 1000) {
+                gameWindow.setTitle(gameName + " FPS: " + frames);
+                timer += 1000;
+                frames = 0;
             }
         }
-        
     }
     
     private void update() {
-    	game.update();
+    	 game.update();
     }
     
     private void render() {
         BufferStrategy buffer = gameCanvas.getBufferStrategy();
         if(buffer == null) {
-           gameCanvas.createBufferStrategy(2);
+            gameCanvas.createBufferStrategy(2);
             return;
         }
         Graphics2D graphicObj = (Graphics2D) buffer.getDrawGraphics();
@@ -100,14 +97,14 @@ public class GraphicalEngine implements KeyListener, MouseListener{
         game.keyPressed(event);
     }
 
-	public void keyReleased(KeyEvent event){}
+    public void keyReleased(KeyEvent event){}
 
-	public void keyTyped(KeyEvent event){
+    public void keyTyped(KeyEvent event){
         game.keyTyped(event);
     }
 
-	public static void main(String[] args){
-		GraphicalEngine engine = new GraphicalEngine();
-		engine.start();
-	}
+    public static void main(String[] args){
+        GraphicalEngine engine = new GraphicalEngine();
+        engine.start();
+    }
 }
