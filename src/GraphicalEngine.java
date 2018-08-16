@@ -1,3 +1,4 @@
+
 import javax.swing.JFrame;
 import java.awt.Canvas;
 import java.awt.Dimension;
@@ -8,9 +9,9 @@ import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
-public class GraphicalEngine implements KeyListener, MouseListener{
+public class GraphicalEngine implements KeyListener, MouseListener {
 
-    private Canvas gameCanvas = new Canvas();
+    private final Canvas gameCanvas = new Canvas();
     public static final int WIDTH = 1280;
     public static final int HEIGHT = 720;
 
@@ -37,41 +38,41 @@ public class GraphicalEngine implements KeyListener, MouseListener{
         long timer = System.currentTimeMillis();
         int frames = 0;
         boolean running = true;
-        
+
         game.onCreate();
         gameWindow.setVisible(true);
-        
-        while(running){
+
+        while (running) {
             long now = System.nanoTime();
             delta += (now - lastTime) / ns;
             lastTime = now;
-            while(delta >= 1) {
+            while (delta >= 1) {
                 update();
                 delta--;
             }
             render();
             frames++;
 
-            if(System.currentTimeMillis() - timer > 1000) {
+            if (System.currentTimeMillis() - timer > 1000) {
                 gameWindow.setTitle(gameName + " FPS: " + frames);
                 timer += 1000;
                 frames = 0;
             }
         }
     }
-    
+
     private void update() {
-    	 game.update();
+        game.update();
     }
-    
+
     private void render() {
         BufferStrategy buffer = gameCanvas.getBufferStrategy();
-        if(buffer == null) {
+        if (buffer == null) {
             gameCanvas.createBufferStrategy(2);
             return;
         }
         Graphics2D graphicObj = (Graphics2D) buffer.getDrawGraphics();
-        graphicObj.clearRect(0, 0,gameCanvas.getWidth(),gameCanvas.getHeight());
+        graphicObj.clearRect(0, 0, gameCanvas.getWidth(), gameCanvas.getHeight());
         game.draw(graphicObj);
         graphicObj.dispose();
         buffer.show();
@@ -93,19 +94,19 @@ public class GraphicalEngine implements KeyListener, MouseListener{
     public void mouseReleased(MouseEvent event) {
     }
 
-    public void keyPressed(KeyEvent event){
+    public void keyPressed(KeyEvent event) {
         game.keyPressed(event);
     }
 
-    public void keyReleased(KeyEvent event){
+    public void keyReleased(KeyEvent event) {
         game.keyReleased(event);
     }
 
-    public void keyTyped(KeyEvent event){
+    public void keyTyped(KeyEvent event) {
         game.keyTyped(event);
     }
 
-    public static void main(String[] args){
+    public static void main(String[] args) {
         GraphicalEngine engine = new GraphicalEngine();
         engine.start();
     }
